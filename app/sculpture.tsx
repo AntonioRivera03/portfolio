@@ -18,12 +18,13 @@ const FALLBACK_ALT = {
   particle: 'Wendelstein 7-X plasma envelope with illustrative particles distributed along its twisted magnetic field',
 };
 
-const INTRO_HOLD_MS = 2200;
+const INTRO_HOLD_MS = 750;
 const INTRO_FADE_MS = 1800;
 
 export default function Sculpture() {
   const mount=useRef<HTMLDivElement>(null);
   const poster=useRef<HTMLImageElement>(null);
+  const posterVisibleAt=useRef<number|null>(null);
   const controller=useRef<StellaratorController|null>(null);
   const [mode,setMode]=useState<StellaratorMode>('particle');
   const [intro,setIntro]=useState<'holding'|'fading'|'done'>('holding');
@@ -44,7 +45,7 @@ export default function Sculpture() {
   useEffect(()=>{
     const image=poster.current;if(!image)return;
     let cancelled=false;
-    image.decode().then(()=>{if(!cancelled)setPosterReady(true);}).catch(()=>{
+    image.decode().then(()=>{if(!cancelled){posterVisibleAt.current=document.hidden?null:performance.now();setPosterReady(true);}}).catch(()=>{
       if(!cancelled)setIntro('done');
     });
     return ()=>{cancelled=true;};
@@ -55,7 +56,10 @@ export default function Sculpture() {
     let timer:ReturnType<typeof setTimeout>|undefined;
     const schedule=()=>{
       clearTimeout(timer);
-      if(!document.hidden)timer=setTimeout(()=>setIntro(paused?'done':'fading'),INTRO_HOLD_MS);
+      if(document.hidden){posterVisibleAt.current=null;return;}
+      posterVisibleAt.current??=performance.now();
+      const remaining=Math.max(0,INTRO_HOLD_MS-(performance.now()-posterVisibleAt.current));
+      timer=setTimeout(()=>setIntro(paused?'done':'fading'),remaining);
     };
     schedule();document.addEventListener('visibilitychange',schedule);
     return ()=>{clearTimeout(timer);document.removeEventListener('visibilitychange',schedule);};
