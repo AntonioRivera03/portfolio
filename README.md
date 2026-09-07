@@ -13,7 +13,10 @@ npm run dev
 
 ## Content
 
-- `app/page.tsx`: profile and project details. LivedMatch and AIcorn are real projects. Kernel is explicitly a proposed project, with an entirely local, scripted simulation.
+- `app/page.tsx`: profile and project entry points. LivedMatch and AICorn are real projects.
+- `app/project-cards.tsx`: shared card artwork, also used during the card-to-page transition.
+- `app/project-experience.tsx` and `.css`: three themed mini landing pages with reversible card expansion, accessible dialog controls, an illustrative matching shortlist, a Conductor walkthrough, and Kernel’s local scripted permission demo. Kernel remains explicitly a proposed project.
+- `public/images/aicorn-conductor.webp`: custom Blender-rendered Conductor network, with animated signal paths layered over the render.
 - `app/sculpture.tsx`: Form, Magnetic, and Particle controls, scientific explanations and citations.
 - `lib/stellarator-scene.ts`: detailed machine, numerical field traces and GPU particle animation.
 - `docs/stellarator-research.md`: source ledger, computational method and scientific limitations.
@@ -36,4 +39,4 @@ Manrope and IBM Plex Mono are served locally. The stellarator was created in a s
 - https://github.com/waseem-polus/aycorn
 - https://github.com/AntonioRivera03
 
-The project illustrations are explanatory workflow studies, not screenshots of the products. Role: Software Engineer (provided by Antonio). Location: Dallas, Texas (public GitHub profile).
+The project illustrations are explanatory workflow studies, not screenshots of the products. LivedMatch’s sample people and compatibility scores are labeled as illustrative. The expanded project copy reflects the project descriptions supplied by Antonio. Role: Software Engineer (provided by Antonio). Location: Dallas, Texas (public GitHub profile).

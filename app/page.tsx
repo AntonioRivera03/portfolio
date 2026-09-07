@@ -1,67 +1,370 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { ArrowDown, ArrowRight, ArrowUpRight, Asterisk, Check, Copy, Cpu, Code2, Mail, GitBranch, Layers, Leaf, Play, RotateCcw, Sparkles, Terminal, Users, X } from 'lucide-react';
-import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
+import { useEffect, useState, type MouseEvent } from 'react';
+import {
+  ArrowDown,
+  ArrowUpRight,
+  Asterisk,
+  Check,
+  Copy,
+  Mail,
+} from 'lucide-react';
+import ProjectExperience, {
+  type ProjectSelection,
+  type ProjectKey,
+} from './project-experience';
+import { MatchVisual, AIcornVisual, KernelVisual } from './project-cards';
 import Sculpture from './sculpture';
 import ActivityLandscape from './activity';
 
-type ProjectKey = 'livedmatch' | 'aicorn' | 'kernel';
 const projects = {
-  livedmatch: { name: 'LivedMatch', number: '01', category: 'PEOPLE × PURPOSE', type: 'Live platform', title: 'Lived experience.\nMeaningful connection.', description: 'Connecting people with lived experience to the researchers and projects that need their perspective.', tags: ['Matching platform', 'Human-centered design'], href: 'https://www.livedmatch.com', linkLabel: 'Visit LivedMatch', challenge: 'Finding the right people for a research project starts with more than a search. It takes a way to connect lived experience with meaningful opportunities.', approach: 'LivedMatch brings project matching, organization approvals, participant decisions, and partnership tracking into a guided workflow.', detail: 'The platform helps organizations discover people with relevant lived experience, while participants can accept or decline opportunities. Connection stays a two-way decision.', note: 'Project overview based on the public LivedMatch platform. The visual on this page is an illustrative matching workflow.' },
-  aicorn: { name: 'AIcorn', number: '02', category: 'INTELLIGENCE × ACTION', type: 'Open source integration', title: 'From a thought\nto a thing, done.', description: 'An AI-focused evolution of Aycorn. Bringing agent tools and task execution into a self-hosted workspace.', tags: ['React / TypeScript', 'Go', 'MCP'], href: 'https://github.com/AntonioRivera03/AIcorn', linkLabel: 'Explore the source', challenge: 'AI becomes more useful when it can work with the tasks and context you already have, instead of living in a separate chat window.', approach: 'My AI integration of Aycorn connects its task system to MCP tools, configurable agent personas, and task-job tracking.', detail: 'Built on Aycorn’s React and TypeScript interface, Go backend, and SQLite storage. The fork extends an existing open-source foundation; its source is available to explore.', note: 'AIcorn is a fork of waseem-polus/aycorn. Credit to the original Aycorn project and its contributors.' },
-  kernel: { name: 'Kernel', number: '03', category: 'SYSTEMS × AGENCY', type: 'Proposed concept', title: 'Small runtime.\nSerious agency.', description: 'An idea for an inspectable AI agent runtime in Rust. Local control, explicit permissions, and a trace of every decision.', tags: ['Rust · proposed', 'Local-first', 'Agent runtime'], href: '', linkLabel: 'Explore the concept', challenge: 'An agent can produce an answer. The more interesting question is whether you can understand and control how it got there.', approach: 'A small Rust coordinator with explicit execution states, a SQLite event journal, and a replaceable connection to a local model server.', detail: 'Proposed scope: read a designated workspace, prepare changes, and stop for approval before writes. Bound tool calls, elapsed time, and model requests. Start with a CLI; make every transition inspectable.', note: 'Future project concept, not a shipped product. The interactive example below is scripted: no model runs and no files are written.' },
+  livedmatch: {
+    name: 'LivedMatch',
+    number: '01',
+    type: 'Live platform',
+    description:
+      'Bringing lived experience into research. Thoughtful matches, trusted communities, and partnerships that go somewhere.',
+    tags: ['Matching platform', 'Human-centered design'],
+  },
+  aicorn: {
+    name: 'AICorn',
+    number: '02',
+    type: 'Open source integration',
+    description:
+      'Your backlog. Your agents. One Conductor to keep it all moving, with you in control.',
+    tags: ['AI orchestration', 'React / TypeScript', 'Go'],
+  },
+  kernel: {
+    name: 'Kernel',
+    number: '03',
+    type: 'Proposed concept',
+    description:
+      'What if an agent had to show its work? A small, local runtime with a memory of every move.',
+    tags: ['Rust · proposed', 'Local-first', 'Agent runtime'],
+  },
 };
 
-function MatchVisual() {
-  return <div className="project-visual match-visual" aria-hidden="true"><div className="visual-topbar"><span className="mini-brand"><span className="match-logo"><Users size={16}/></span>livedmatch</span><span>MEANINGFUL CONNECTIONS</span></div><div className="match-headline">Better research.<br/><em>More human.</em></div><div className="matching-flow"><div className="flow-person"><div className="person-icon"><Users size={26}/></div><span>Lived experience</span><small>Your perspective matters.</small></div><div className="connection-line"><i/><i/><i/></div><div className="match-center"><Asterisk size={38} strokeWidth={1.4}/></div><div className="connection-line"><i/><i/><i/></div><div className="flow-person"><div className="person-icon"><Layers size={26}/></div><span>Research projects</span><small>Built around real people.</small></div></div><div className="match-bottom"><span><Check size={12}/> Shared purpose</span><span><Check size={12}/> Mutual choice</span><span><Check size={12}/> Real collaboration</span></div><span className="visual-caption">AN ILLUSTRATIVE MATCHING WORKFLOW</span></div>;
-}
-function AIcornVisual() {
-  return <div className="project-visual aicorn-visual" aria-hidden="true"><div className="visual-topbar"><span className="mini-brand"><Leaf size={20}/> AIcorn</span><span>AN AYCORN INTEGRATION</span></div><div className="aicorn-orbit"><svg viewBox="0 0 600 300" className="orbit-lines"><path d="M98 95 C250 95 165 150 300 150 S430 95 503 95 M98 223 C230 223 165 150 300 150 S430 220 503 223"/><circle cx="300" cy="150" r="91"/><circle cx="300" cy="150" r="130"/></svg><div className="orbit-core"><Sparkles size={42} strokeWidth={1.1}/><span>AIcorn</span></div><div className="orbit-node node-one"><GitBranch size={17}/><span>Task context</span></div><div className="orbit-node node-two"><Terminal size={17}/><span>MCP tools</span></div><div className="orbit-node node-three"><Users size={17}/><span>Agent personas</span></div><div className="orbit-node node-four"><Check size={17}/><span>Task jobs</span></div></div><div className="aicorn-status"><i/> IDEAS, CONNECTED TO ACTION.<ArrowRight size={16}/></div></div>;
-}
-function KernelVisual() {
-  return <div className="project-visual kernel-visual" aria-hidden="true"><div className="visual-topbar"><span className="mini-brand"><Cpu size={20}/> kernel</span><span className="concept-stamp">CONCEPT / NOT YET BUILT</span></div><div className="terminal-preview"><div className="terminal-dots"><i/><i/><i/><span>runtime / trace</span></div><div className="terminal-code"><p><span className="terminal-green">~</span> kernel run <span className="terminal-dim">--local</span></p><p><span className="line-number">01</span><span className="terminal-dim">state</span> plan.created</p><p><span className="line-number">02</span><span className="terminal-dim">tool</span> workspace.read <Check size={12}/></p><p><span className="line-number">03</span><span className="terminal-dim">next</span> changes.proposed</p><p><span className="line-number">04</span><span className="terminal-amber">awaiting human approval</span><span className="terminal-cursor"/></p></div></div><span className="visual-caption">AN IDEA FOR AGENTS YOU CAN UNDERSTAND.</span></div>;
-}
-function KernelSimulation() {
-  const [stage, setStage] = useState<'idle'|'waiting'|'approved'|'rejected'>('idle');
-  return <div className="kernel-demo"><div className="demo-label"><Terminal size={15}/><span>INTERACTIVE SIMULATION</span></div><p>“Turn these project notes into a checklist.”</p><ol className="demo-trace"><li><span>01</span>Read request: notes/project.md <Check size={14}/></li>{stage !== 'idle' && <><li><span>02</span>Sample notes loaded <Check size={14}/></li><li><span>03</span>Propose: write checklist.md <Check size={14}/></li><li className={stage === 'waiting' ? 'pending' : ''}><span>04</span>{stage === 'waiting' ? 'Paused — your approval is required' : stage === 'approved' ? 'Approved — simulated change recorded' : 'Rejected — simulated run stopped'}{stage === 'approved' && <Check size={14}/>}</li></>}</ol>{stage === 'idle' ? <button className="pill-button primary-button" onClick={() => setStage('waiting')}><Play size={14}/> Run simulation</button> : stage === 'waiting' ? <div className="demo-actions"><button onClick={() => setStage('approved')} className="pill-button primary-button"><Check size={14}/> Approve simulated write</button><button onClick={() => setStage('rejected')} className="pill-button secondary-button"><X size={14}/> Reject</button></div> : <><div className="demo-result" role="status">{stage === 'approved' ? <pre>{'# Project checklist\n\n- [ ] Clarify the problem\n- [ ] Build the smallest useful version\n- [ ] Test the important paths\n- [ ] Document what changed'}</pre> : <p>Permission denied. No simulated write performed.</p>}</div><button className="text-link" onClick={() => setStage('idle')}><RotateCcw size={14}/> Replay the example</button></>}<small>Scripted example. No model runs and no files are written.</small></div>;
-}
-
 export default function Home() {
-  const [project, setProject] = useState<ProjectKey | null>(null);
+  const [selection, setSelection] = useState<ProjectSelection | null>(null);
+  function openProject(key: ProjectKey, event: MouseEvent<HTMLButtonElement>) {
+    const trigger = event.currentTarget;
+    const source = trigger
+      .closest('article')
+      ?.querySelector<HTMLElement>('.project-open');
+    if (source)
+      setSelection({
+        key,
+        source,
+        trigger,
+        bounds: source.getBoundingClientRect(),
+      });
+  }
   const [copied, setCopied] = useState(false);
   async function copyEmail() {
-    try { await navigator.clipboard.writeText('antoniolrivera03@gmail.com'); setCopied(true); }
-    catch { window.location.href = 'mailto:antoniolrivera03@gmail.com'; }
+    try {
+      await navigator.clipboard.writeText('antoniolrivera03@gmail.com');
+      setCopied(true);
+    } catch {
+      window.location.href = 'mailto:antoniolrivera03@gmail.com';
+    }
   }
   useEffect(() => {
     const elements = document.querySelectorAll('[data-reveal]');
-    const observer = new IntersectionObserver(entries => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-revealed'); observer.unobserve(entry.target); } }); }, { threshold: .08 });
-    elements.forEach(el => { el.classList.add('will-reveal'); observer.observe(el); });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.08 },
+    );
+    elements.forEach((el) => {
+      el.classList.add('will-reveal');
+      observer.observe(el);
+    });
     return () => observer.disconnect();
   }, []);
-  const selected = project ? projects[project] : null;
-  return <>
-    <a href="#work" className="skip-link">Skip to selected work</a>
-    <header className="site-header"><a className="wordmark" href="#home" aria-label="Antonio Rivera home">antonio rivera<span className="brand-dot"/></a><nav aria-label="Main navigation"><a href="#work">Work <span>01</span></a><a href="#about">About <span>03</span></a><a href="#contact">Let’s talk <ArrowUpRight size={14}/></a></nav><span className="availability"><i/>Open to what’s next</span></header>
-    <main id="home">
-      <section className="hero" aria-labelledby="hero-title">
-        <div className="hero-topline"><span className="eyebrow">SOFTWARE ENGINEER × CREATIVE THINKER</span><span className="eyebrow">DALLAS, TX / EARTH</span></div>
-        <div className="hero-copy"><h1 id="hero-title">A little logic.<br/>A lot of<br/><span>possibility.</span><Asterisk className="headline-star" aria-hidden="true"/></h1><p>I’m Antonio. I turn complex problems into<br className="desktop-br"/> thoughtful digital experiences.</p><a className="pill-button primary-button" href="#work">Explore my work <ArrowDown size={17}/></a></div>
-        <div className="hero-art"><div className="art-grid"/><Sculpture/></div>
-        <div className="hero-bottom"><a href="#work" className="scroll-prompt"><span><ArrowDown size={18}/></span>SCROLL TO DISCOVER</a><p>A developer’s mind.<br/>An explorer’s instinct.</p><span className="hero-coordinate">ALWAYS A WORK IN PROGRESS <span>↗</span></span></div>
-      </section>
-      <div className="manifesto-strip" aria-hidden="true"><div><span>THINK DEEPLY</span><Asterisk/><span>BUILD THOUGHTFULLY</span><Asterisk/><span>STAY CURIOUS</span><Asterisk/><span>MAKE IT MATTER</span><Asterisk/></div></div>
-      <section className="section work-section" id="work" aria-labelledby="work-title">
-        <div className="section-label"><span className="eyebrow">01 / SELECTED WORK</span><span className="eyebrow">TWO IN THE WORLD. ONE ON THE HORIZON.</span></div>
-        <div className="section-heading" data-reveal><h2 id="work-title">Curiosity, <em>in practice.</em></h2><p>A few things I’ve put into the world.<br/>And an idea for what comes next.</p></div>
-        <div className="projects-grid">{(Object.keys(projects) as ProjectKey[]).map(key => { const p = projects[key]; return <article key={key} className={`project-card project-${key}`} data-reveal><button className="project-open" onClick={() => setProject(key)} aria-label={`Explore ${p.name}${key === 'kernel' ? ' concept' : ''}`}>{key === 'livedmatch' ? <MatchVisual/> : key === 'aicorn' ? <AIcornVisual/> : <KernelVisual/>}<span className="project-open-arrow"><ArrowUpRight size={24}/></span></button><div className="project-info"><div className="project-name-row"><div><span className="project-number">{p.number} /</span><h3><button onClick={() => setProject(key)}>{p.name}</button></h3></div><span className={`project-type ${key === 'kernel' ? 'is-concept' : ''}`}><i/>{p.type}</span></div><p>{p.description}</p><div className="project-tags">{p.tags.map(tag => <span key={tag}>{tag}</span>)}</div></div></article>; })}</div>
-        <div className="work-footnote"><span>THERE’S ALWAYS ANOTHER IDEA.</span><a href="https://github.com/AntonioRivera03" target="_blank" rel="noreferrer" className="text-link">More on GitHub <ArrowUpRight size={17}/></a></div>
-      </section>
-      <ActivityLandscape/>
-      <section className="section about-section" id="about" aria-labelledby="about-title"><div className="section-label"><span className="eyebrow">03 / THE HUMAN BEHIND THE CODE</span><span className="eyebrow">ANTONIO RIVERA — SOFTWARE ENGINEER</span></div><div className="about-layout"><div data-reveal><h2 id="about-title">Good things start<br/>with <em>“what if?”</em></h2><div className="about-signature">ar<span>✳</span></div><span className="eyebrow">BASED IN DALLAS. THINKING EVERYWHERE.</span></div><div className="about-copy" data-reveal><p className="large-copy">I like the space between<br/><span>“could this work?”</span> and<br/><span>“I made it work.”</span></p><p>I’m Antonio, a software engineer in Dallas, Texas. My work moves between human-centered platforms, AI integrations, and the systems underneath them.</p><p>I care about the way things work and the way they feel. Clear interfaces. Thoughtful decisions. Details that reward a closer look.</p><div className="capability-row"><span>THE INTERFACE</span><p>React · TypeScript</p></div><div className="capability-row"><span>THE ENGINE</span><p>Go · Python · Rust · SQLite</p></div><div className="capability-row"><span>THE NEXT QUESTION</span><p>AI agents · Local-first systems</p></div></div></div></section>
-      <footer className="section contact-section" id="contact"><div className="contact-topline"><span className="eyebrow">04 / A GOOD CONVERSATION CHANGES THINGS.</span><span className="contact-status"><i/>Open to engineering opportunities</span></div><a href="mailto:antoniolrivera03@gmail.com" className="contact-title">Let’s make<br/><em>what’s next.</em><ArrowUpRight/></a><div className="contact-subrow"><p>Interesting problems. Thoughtful people.<br/>Something worth building together.</p><div className="contact-methods"><a className="contact-link" href="mailto:antoniolrivera03@gmail.com"><Mail size={18}/> antoniolrivera03@gmail.com <ArrowUpRight size={18}/></a><button className="copy-email" onClick={copyEmail}>{copied ? <Check size={14}/> : <Copy size={14}/>}<span aria-live="polite">{copied ? "Email copied" : "Copy email"}</span></button></div></div><div className="footer-bottom"><span>© 2026 Antonio Rivera</span><span>BUILT WITH INTENTION. AND A LITTLE CURIOSITY.</span><a href="#home">Back to top ↑</a></div></footer>
-    </main>
-    <Dialog open={project !== null} onOpenChange={open => { if (!open) setProject(null); }}><DialogContent className="project-dialog">{selected && <><div className="dialog-eyebrow eyebrow">{selected.number} / {selected.category}</div><DialogTitle className="dialog-title">{selected.name}<span className="dialog-type">{selected.type}</span></DialogTitle><DialogDescription className="dialog-summary">{selected.description}</DialogDescription><div className="project-tags">{selected.tags.map(tag => <span key={tag}>{tag}</span>)}</div><div className="case-block"><h4>The question</h4><p>{selected.challenge}</p></div><div className="case-block"><h4>{project === 'kernel' ? 'The proposed direction' : 'The approach'}</h4><p>{selected.approach}</p><p>{selected.detail}</p></div>{project === 'kernel' && <KernelSimulation/>}<p className="project-note">{selected.note}</p>{selected.href && <a className="pill-button primary-button dialog-cta" href={selected.href} target="_blank" rel="noreferrer">{selected.linkLabel}<ArrowUpRight size={17}/></a>}</>}</DialogContent></Dialog>
-  </>;
+  return (
+    <>
+      <a href="#work" className="skip-link">
+        Skip to selected work
+      </a>
+      <header className="site-header">
+        <a className="wordmark" href="#home" aria-label="Antonio Rivera home">
+          antonio rivera
+          <span className="brand-dot" />
+        </a>
+        <nav aria-label="Main navigation">
+          <a href="#work">
+            Work <span>01</span>
+          </a>
+          <a href="#about">
+            About <span>03</span>
+          </a>
+          <a href="#contact">
+            Let’s talk <ArrowUpRight size={14} />
+          </a>
+        </nav>
+        <span className="availability">
+          <i />
+          Open to what’s next
+        </span>
+      </header>
+      <main id="home">
+        <section className="hero" aria-labelledby="hero-title">
+          <div className="hero-topline">
+            <span className="eyebrow">
+              SOFTWARE ENGINEER × CREATIVE THINKER
+            </span>
+            <span className="eyebrow">DALLAS, TX / EARTH</span>
+          </div>
+          <div className="hero-copy">
+            <h1 id="hero-title">
+              A little logic.
+              <br />A lot of
+              <br />
+              <span>possibility.</span>
+              <Asterisk className="headline-star" aria-hidden="true" />
+            </h1>
+            <p>
+              I’m Antonio. I turn complex problems into
+              <br className="desktop-br" /> thoughtful digital experiences.
+            </p>
+            <a className="pill-button primary-button" href="#work">
+              Explore my work <ArrowDown size={17} />
+            </a>
+          </div>
+          <div className="hero-art">
+            <div className="art-grid" />
+            <Sculpture />
+          </div>
+          <div className="hero-bottom">
+            <a href="#work" className="scroll-prompt">
+              <span>
+                <ArrowDown size={18} />
+              </span>
+              SCROLL TO DISCOVER
+            </a>
+            <p>
+              A developer’s mind.
+              <br />
+              An explorer’s instinct.
+            </p>
+            <span className="hero-coordinate">
+              ALWAYS A WORK IN PROGRESS <span>↗</span>
+            </span>
+          </div>
+        </section>
+        <div className="manifesto-strip" aria-hidden="true">
+          <div>
+            <span>THINK DEEPLY</span>
+            <Asterisk />
+            <span>BUILD THOUGHTFULLY</span>
+            <Asterisk />
+            <span>STAY CURIOUS</span>
+            <Asterisk />
+            <span>MAKE IT MATTER</span>
+            <Asterisk />
+          </div>
+        </div>
+        <section
+          className="section work-section"
+          id="work"
+          aria-labelledby="work-title"
+        >
+          <div className="section-label">
+            <span className="eyebrow">01 / SELECTED WORK</span>
+            <span className="eyebrow">
+              TWO IN THE WORLD. ONE ON THE HORIZON.
+            </span>
+          </div>
+          <div className="section-heading" data-reveal>
+            <h2 id="work-title">
+              Curiosity, <em>in practice.</em>
+            </h2>
+            <p>
+              A few things I’ve put into the world.
+              <br />
+              And an idea for what comes next.
+            </p>
+          </div>
+          <div className="projects-grid">
+            {(Object.keys(projects) as ProjectKey[]).map((key) => {
+              const p = projects[key];
+              return (
+                <article
+                  key={key}
+                  className={`project-card project-${key}`}
+                  data-reveal
+                >
+                  <button
+                    className="project-open"
+                    onClick={(event) => openProject(key, event)}
+                    aria-label={`Explore ${p.name}${key === 'kernel' ? ' concept' : ''}`}
+                  >
+                    {key === 'livedmatch' ? (
+                      <MatchVisual />
+                    ) : key === 'aicorn' ? (
+                      <AIcornVisual />
+                    ) : (
+                      <KernelVisual />
+                    )}
+                    <span className="project-open-arrow">
+                      <ArrowUpRight size={24} />
+                    </span>
+                  </button>
+                  <div className="project-info">
+                    <div className="project-name-row">
+                      <div>
+                        <span className="project-number">{p.number} /</span>
+                        <h3>
+                          <button onClick={(event) => openProject(key, event)}>
+                            {p.name}
+                          </button>
+                        </h3>
+                      </div>
+                      <span
+                        className={`project-type ${key === 'kernel' ? 'is-concept' : ''}`}
+                      >
+                        <i />
+                        {p.type}
+                      </span>
+                    </div>
+                    <p>{p.description}</p>
+                    <div className="project-tags">
+                      {p.tags.map((tag) => (
+                        <span key={tag}>{tag}</span>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+          <div className="work-footnote">
+            <span>THERE’S ALWAYS ANOTHER IDEA.</span>
+            <a
+              href="https://github.com/AntonioRivera03"
+              target="_blank"
+              rel="noreferrer"
+              className="text-link"
+            >
+              More on GitHub <ArrowUpRight size={17} />
+            </a>
+          </div>
+        </section>
+        <ActivityLandscape />
+        <section
+          className="section about-section"
+          id="about"
+          aria-labelledby="about-title"
+        >
+          <div className="section-label">
+            <span className="eyebrow">03 / THE HUMAN BEHIND THE CODE</span>
+            <span className="eyebrow">ANTONIO RIVERA — SOFTWARE ENGINEER</span>
+          </div>
+          <div className="about-layout">
+            <div data-reveal>
+              <h2 id="about-title">
+                Good things start
+                <br />
+                with <em>“what if?”</em>
+              </h2>
+              <div className="about-signature">
+                ar<span>✳</span>
+              </div>
+              <span className="eyebrow">
+                BASED IN DALLAS. THINKING EVERYWHERE.
+              </span>
+            </div>
+            <div className="about-copy" data-reveal>
+              <p className="large-copy">
+                I like the space between
+                <br />
+                <span>“could this work?”</span> and
+                <br />
+                <span>“I made it work.”</span>
+              </p>
+              <p>
+                I’m Antonio, a software engineer in Dallas, Texas. My work moves
+                between human-centered platforms, AI integrations, and the
+                systems underneath them.
+              </p>
+              <p>
+                I care about the way things work and the way they feel. Clear
+                interfaces. Thoughtful decisions. Details that reward a closer
+                look.
+              </p>
+              <div className="capability-row">
+                <span>THE INTERFACE</span>
+                <p>React · TypeScript</p>
+              </div>
+              <div className="capability-row">
+                <span>THE ENGINE</span>
+                <p>Go · Python · Rust · SQLite</p>
+              </div>
+              <div className="capability-row">
+                <span>THE NEXT QUESTION</span>
+                <p>AI agents · Local-first systems</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <footer className="section contact-section" id="contact">
+          <div className="contact-topline">
+            <span className="eyebrow">
+              04 / A GOOD CONVERSATION CHANGES THINGS.
+            </span>
+            <span className="contact-status">
+              <i />
+              Open to engineering opportunities
+            </span>
+          </div>
+          <a href="mailto:antoniolrivera03@gmail.com" className="contact-title">
+            Let’s make
+            <br />
+            <em>what’s next.</em>
+            <ArrowUpRight />
+          </a>
+          <div className="contact-subrow">
+            <p>
+              Interesting problems. Thoughtful people.
+              <br />
+              Something worth building together.
+            </p>
+            <div className="contact-methods">
+              <a
+                className="contact-link"
+                href="mailto:antoniolrivera03@gmail.com"
+              >
+                <Mail size={18} /> antoniolrivera03@gmail.com{' '}
+                <ArrowUpRight size={18} />
+              </a>
+              <button className="copy-email" onClick={copyEmail}>
+                {copied ? <Check size={14} /> : <Copy size={14} />}
+                <span aria-live="polite">
+                  {copied ? 'Email copied' : 'Copy email'}
+                </span>
+              </button>
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <span>© 2026 Antonio Rivera</span>
+            <span>BUILT WITH INTENTION. AND A LITTLE CURIOSITY.</span>
+            <a href="#home">Back to top ↑</a>
+          </div>
+        </footer>
+      </main>
+      {selection && (
+        <ProjectExperience
+          key={selection.key}
+          selection={selection}
+          onClosed={() => setSelection(null)}
+        />
+      )}
+    </>
+  );
 }
