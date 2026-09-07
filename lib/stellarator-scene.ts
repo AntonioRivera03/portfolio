@@ -1,6 +1,5 @@
 import * as T from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { toScenePoint, type XYZ } from './stellarator-math';
 
 export type StellaratorMode = 'form' | 'magnetic' | 'particle';
@@ -24,6 +23,23 @@ function releaseObject(root: T.Object3D) {
     }
   });
   geometries.forEach(g => g.dispose()); materials.forEach(m => m.dispose());
+}
+
+function createOverheadEnvironment(renderer:T.WebGLRenderer) {
+  const studio=new T.Scene();
+  studio.background=new T.Color(.045,.055,.075);
+  // Metals reflect the light rig: keep the broad bright source above the machine.
+  const softbox=new T.Mesh(new T.PlaneGeometry(8,6),new T.MeshBasicMaterial({
+    color:new T.Color(12,11.5,10.5),toneMapped:false,
+  }));
+  softbox.position.set(1.2,9,2);softbox.lookAt(0,0,0);studio.add(softbox);
+  const fill=new T.Mesh(new T.PlaneGeometry(5,3),new T.MeshBasicMaterial({
+    color:new T.Color(.45,.5,.6),toneMapped:false,
+  }));
+  fill.position.set(0,4,10);fill.lookAt(0,0,0);studio.add(fill);
+  const generator=new T.PMREMGenerator(renderer);
+  try {return generator.fromScene(studio,.015);}
+  finally {releaseObject(studio);generator.dispose();}
 }
 
 const plasmaVertex = `
@@ -106,17 +122,17 @@ export async function createStellaratorScene(
   renderer.setPixelRatio(Math.min(window.devicePixelRatio,1.6));
   renderer.setClearColor(0x111310,0);
   renderer.toneMapping=T.ACESFilmicToneMapping;
-  renderer.toneMappingExposure=1.45;
+  renderer.toneMappingExposure=1.12;
+  renderer.shadowMap.type=T.PCFSoftShadowMap;
   renderer.domElement.setAttribute('aria-hidden','true'); host.appendChild(renderer.domElement);
   const scene = new T.Scene();
   const camera = new T.PerspectiveCamera(35,1,.1,100);
   camera.position.set(6.4,6.0,9.2); camera.lookAt(0,0,0);
-  const room = new RoomEnvironment(); const pmrem=new T.PMREMGenerator(renderer);
-  let environment=pmrem.fromScene(room,.045); scene.environment=environment.texture;
-  room.dispose(); pmrem.dispose();
-  const key=new T.DirectionalLight(0xe7f3ff,3.5); key.position.set(3,8,5); scene.add(key);
-  const rim=new T.DirectionalLight(0x8fbfff,2); rim.position.set(-5,2,-4); scene.add(rim);
-  const warm=new T.DirectionalLight(0xffd5a5,1.5); warm.position.set(4,-1,-3); scene.add(warm);
+  let environment=createOverheadEnvironment(renderer);scene.environment=environment.texture;
+  const key=new T.DirectionalLight(0xfff3e5,4.5);key.position.set(1.2,9,2);scene.add(key);
+  key.shadow.mapSize.set(2048,2048);
+  Object.assign(key.shadow.camera,{left:-3.8,right:3.8,top:3.8,bottom:-3.8,near:.5,far:18});
+  key.shadow.camera.updateProjectionMatrix();key.shadow.bias=-.0002;key.shadow.normalBias=.006;
   const machine = new T.Group(); scene.add(machine);
   machine.add(gltf.scene);
   const bounds=new T.Box3().setFromObject(gltf.scene);
@@ -137,7 +153,8 @@ export async function createStellaratorScene(
     const materials=Array.isArray(object.material)?object.material:[object.material];
     materials.forEach(material=>{
       if (!(material instanceof T.MeshStandardMaterial)) return;
-      material.envMapIntensity=1.25;
+      material.envMapIntensity=.8;
+      object.receiveShadow=true;
       const category=object.name.startsWith('coil_')?'coil':object.name.startsWith('vessel_')?'vessel':'support';
       hardware.push({mesh:object,material,opacity:material.opacity,category});
     });
@@ -208,6 +225,7 @@ export async function createStellaratorScene(
   let opacityTarget=0,opacityCurrent=0;
   function applyMode(next:StellaratorMode){
     mode=next;dirty=true;
+    key.castShadow=mode==='form';renderer.shadowMap.enabled=mode==='form';
     fieldGroup.visible=mode==='magnetic';particles.visible=mode==='particle';
     if(plasma)plasma.visible=mode!=='form';
     plasmaMaterial.uniforms.uMode.value=mode==='particle'?1:0;
@@ -215,6 +233,7 @@ export async function createStellaratorScene(
     hardware.forEach(({mesh,material,opacity,category})=>{
       // Keep only a ghost of the coil system in the explanatory views.
       mesh.visible=mode==='form'||category==='coil';
+      mesh.castShadow=mode==='form';
       material.transparent=mode!=='form'||opacity<1;
       material.opacity=mode==='form'?opacity:mode==='magnetic'?.13:.07;
       material.depthWrite=mode==='form';material.needsUpdate=true;
@@ -240,10 +259,8 @@ export async function createStellaratorScene(
   function contextLost(event:Event){event.preventDefault();contextAvailable=false;options.onContext(false);}
   function contextRestored(){
     try {
-      const replacementRoom=new RoomEnvironment();
-      const generator=new T.PMREMGenerator(renderer);
-      const replacement=generator.fromScene(replacementRoom,.045);
-      replacementRoom.dispose();generator.dispose();environment.dispose();
+      const replacement=createOverheadEnvironment(renderer);
+      environment.dispose();
       environment=replacement;scene.environment=environment.texture;
       contextAvailable=true;dirty=true;options.onContext(true);schedule();
     } catch {contextAvailable=false;options.onContext(false);}
@@ -286,7 +303,7 @@ export async function createStellaratorScene(
       if(disposed)return;disposed=true;cancelAnimationFrame(frame);resizeObserver.disconnect();intersectionObserver.disconnect();
       host.removeEventListener('pointerdown',pointerDown);host.removeEventListener('pointermove',pointerMove);host.removeEventListener('pointerup',pointerUp);host.removeEventListener('pointercancel',pointerUp);host.removeEventListener('keydown',keyDown);
       document.removeEventListener('visibilitychange',visibilityChange);renderer.domElement.removeEventListener('webglcontextlost',contextLost);renderer.domElement.removeEventListener('webglcontextrestored',contextRestored);
-      releaseObject(scene);plasmaMaterial.dispose();environment.dispose();pathTexture.dispose();renderer.dispose();renderer.domElement.remove();
+      releaseObject(scene);key.shadow.dispose();plasmaMaterial.dispose();environment.dispose();pathTexture.dispose();renderer.dispose();renderer.domElement.remove();
     },
   };
 }
