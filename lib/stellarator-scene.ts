@@ -12,6 +12,7 @@ export type StellaratorController = {
 };
 type FieldData = { paths: { points: XYZ[] }[] };
 const DEFAULT_ROTATION = { x: 0, y: -.1 };
+const PARTICLE_TIME_SCALE = .75;
 
 function releaseObject(root: T.Object3D) {
   const geometries = new Set<T.BufferGeometry>();
@@ -87,7 +88,7 @@ const particleFragment = `
 /** Builds a data-derived machine with vacuum field traces. Never simulates plasma equilibrium at runtime. */
 export async function createStellaratorScene(
   host: HTMLDivElement,
-  options: { signal: AbortSignal; paused: boolean; onContext: (available: boolean) => void },
+  options: { signal: AbortSignal; mode: StellaratorMode; paused: boolean; onContext: (available: boolean) => void },
 ): Promise<StellaratorController> {
   const [modelResponse, fieldResponse] = await Promise.all([
     fetch('/images/stellarator.glb', { signal: options.signal }),
@@ -202,7 +203,7 @@ export async function createStellaratorScene(
     transparent:true,depthWrite:false,blending:T.AdditiveBlending});
   const particles=new T.Points(particleGeometry,particleMaterial);particles.frustumCulled=false;particles.visible=false;particles.renderOrder=8;machine.add(particles);
   const target={x:DEFAULT_ROTATION.x,y:DEFAULT_ROTATION.y};
-  let disposed=false,frame=0,visible=true,contextAvailable=true,paused=options.paused,mode:StellaratorMode='form';
+  let disposed=false,frame=0,visible=true,contextAvailable=true,paused=options.paused,mode:StellaratorMode=options.mode;
   let dirty=true,last=0,time=0,dragging=false,previousX=0,previousY=0;
   let opacityTarget=0,opacityCurrent=0;
   function applyMode(next:StellaratorMode){
@@ -268,15 +269,15 @@ export async function createStellaratorScene(
     machine.rotation.y+=(target.y-machine.rotation.y)*damping;
     opacityCurrent+=(opacityTarget-opacityCurrent)*damping;
     plasmaMaterial.uniforms.uOpacity.value=opacityCurrent;
-    plasmaMaterial.uniforms.uTime.value=mode==='particle'?time:0;
-    particleMaterial.uniforms.uTime.value=time;
+    plasmaMaterial.uniforms.uTime.value=mode==='particle'?time*PARTICLE_TIME_SCALE:0;
+    particleMaterial.uniforms.uTime.value=time*PARTICLE_TIME_SCALE;
     if(mode==='magnetic')updateProbe();
     renderer.render(scene,camera);
     dirty=Math.abs(machine.rotation.x-target.x)>.001||Math.abs(machine.rotation.y-target.y)>.001||Math.abs(opacityTarget-opacityCurrent)>.001;
     // A stationary Form view and any paused scene render only on demand.
     if(dirty||(!paused&&mode!=='form'))schedule();
   }
-  applyMode('form');machine.rotation.set(target.x,target.y,0);updateProbe();renderer.render(scene,camera);options.onContext(true);schedule();
+  applyMode(options.mode);machine.rotation.set(target.x,target.y,0);updateProbe();renderer.render(scene,camera);options.onContext(true);schedule();
   return {
     setMode(next){applyMode(next);schedule();},
     setPaused(next){paused=next;dirty=true;last=0;schedule();},

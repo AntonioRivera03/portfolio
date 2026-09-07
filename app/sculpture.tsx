@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, Info, Pause, Play, RotateCcw } from 'lucide-react';
+import { ArrowUpRight, Info } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import type { StellaratorController, StellaratorMode } from '@/lib/stellarator-scene';
@@ -21,7 +21,7 @@ const FALLBACK_ALT = {
 export default function Sculpture() {
   const mount=useRef<HTMLDivElement>(null);
   const controller=useRef<StellaratorController|null>(null);
-  const [mode,setMode]=useState<StellaratorMode>('form');
+  const [mode,setMode]=useState<StellaratorMode>('particle');
   const [paused,setPaused]=useState(false);
   const [ready,setReady]=useState(false);
   const [unavailable,setUnavailable]=useState(false);
@@ -43,7 +43,7 @@ export default function Sculpture() {
     setUnavailable(false);setReady(false);
     import('@/lib/stellarator-scene').then(({createStellaratorScene})=>{
       if(disposed)return;
-      return createStellaratorScene(host,{signal:abort.signal,paused:settings.current.paused,onContext:available=>{if(!disposed){setReady(available);setUnavailable(!available);}}});
+      return createStellaratorScene(host,{signal:abort.signal,mode:settings.current.mode,paused:settings.current.paused,onContext:available=>{if(!disposed){setReady(available);setUnavailable(!available);}}});
     }).then(scene=>{
       if(!scene)return;if(disposed){scene.dispose();return;}
       controller.current=scene;scene.setMode(settings.current.mode);scene.setPaused(settings.current.paused);
@@ -56,15 +56,13 @@ export default function Sculpture() {
   return <>
     <div className="stellarator-heading"><span className="stellarator-mark">✳</span><div><span>WENDELSTEIN 7-X</span><small>A STUDY IN CONFINEMENT</small></div><button className="stellarator-info" onClick={()=>setExplanation(true)} aria-label="Learn about the stellarator model and its physics"><Info size={16}/></button></div>
     <div className={`sculpture-frame stellarator-frame ${ready?'scene-ready':''}`}>
-      <img className="sculpture-fallback" src={`/images/stellarator-${ready?'form':mode}.png`} alt={FALLBACK_ALT[ready?'form':mode]} width="1400" height="1400" fetchPriority="high"/>
+      <img className="sculpture-fallback" src={`/images/stellarator-${mode}.png`} alt={FALLBACK_ALT[mode]} width="1400" height="1400" fetchPriority="high"/>
       <div className="scene-canvas" ref={mount} tabIndex={ready?0:-1} role="group" aria-label={`${current.label} view of Wendelstein 7-X. Drag or use arrow keys to rotate. Press Home to reset.`}/>
     </div>
     <div className="scene-ui stellarator-ui">
       <div className="stellarator-caption" aria-live="polite"><span className="stellarator-view-index">{current.index} /</span><p>{current.title}</p></div>
       <div className="scene-controls">
         <Tabs value={mode} onValueChange={value=>setMode(value as StellaratorMode)} className="material-tabs"><TabsList aria-label="Stellarator view"><TabsTrigger value="form">Form</TabsTrigger><TabsTrigger value="magnetic">Magnetic</TabsTrigger><TabsTrigger value="particle">Particle</TabsTrigger></TabsList></Tabs>
-        {ready&&<><button className="scene-icon-button" onClick={()=>setPaused(p=>!p)} aria-label={paused?'Play stellarator animation':'Pause stellarator animation'}>{paused?<Play size={13}/>:<Pause size={13}/>}</button>
-        <button className="scene-icon-button" onClick={()=>controller.current?.reset()} aria-label="Reset stellarator view"><RotateCcw size={13}/></button></>}
       </div>
       <div className="stellarator-legend">{(!ready&&mode==='magnetic'?current.legend.slice(0,1):current.legend).map(([color,label])=><span key={label}><i style={{background:color}}/>{label}</span>)}</div>
       <p className="stellarator-note">{unavailable?'Still-image mode · Interactive 3D unavailable':ready?'Drag to explore · Educational visualization':'Preparing the magnetic geometry…'}{unavailable&&<button onClick={()=>setRetry(n=>n+1)}>Retry 3D</button>}</p>
