@@ -52,12 +52,13 @@ export default function Sculpture() {
   },[]);
 
   useEffect(()=>{
-    if(intro!=='holding'||!posterReady||!ready||explanation)return;
+    if(intro!=='holding'||!posterReady)return;
     let timer:ReturnType<typeof setTimeout>|undefined;
     const schedule=()=>{
       clearTimeout(timer);
-      if(document.hidden){posterVisibleAt.current=null;return;}
+      if(document.hidden||explanation){posterVisibleAt.current=null;return;}
       posterVisibleAt.current??=performance.now();
+      if(!ready)return;
       const remaining=Math.max(0,INTRO_HOLD_MS-(performance.now()-posterVisibleAt.current));
       timer=setTimeout(()=>setIntro(paused?'done':'fading'),remaining);
     };
