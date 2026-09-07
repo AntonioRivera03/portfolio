@@ -41,7 +41,6 @@ export default function ActivityLandscape() {
             const h = d.count ? 16 + d.count / max * 98 : 5;
             const active = selected === i;
             return <g key={d.date} id={`contribution-${i}`} className={`landscape-bar ${active ? 'selected' : ''}`} role="button" tabIndex={active ? 0 : -1} aria-label={`${dayLabel(d.date)}: ${d.count} ${d.count === 1 ? 'contribution' : 'contributions'}`} aria-pressed={active} onPointerEnter={() => setSelected(i)} onClick={() => setSelected(i)} onFocus={() => setSelected(i)} onKeyDown={e => selectByKey(e, i)}>
-              <title>{dayLabel(d.date)} · {d.count} contributions</title>
               <path d={`M${x},${y} l25,-10 28,15 -25,11 Z`} fill="#1c2117" stroke="#333d27" strokeWidth=".7"/>
               <g className="bar-column" style={{ '--bar-delay': `${i * 20}ms` } as React.CSSProperties}>
                 <path d={`M${x},${y-h} l28,15 v${h} l-28,-15 Z`} fill={d.count ? 'url(#bar-face)' : '#333e28'} stroke={active ? '#efffc2' : '#111810'} strokeWidth=".8"/>
