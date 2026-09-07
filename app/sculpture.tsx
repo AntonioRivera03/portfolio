@@ -18,21 +18,59 @@ const FALLBACK_ALT = {
   particle: 'Wendelstein 7-X plasma envelope with illustrative particles distributed along its twisted magnetic field',
 };
 
+const INTRO_HOLD_MS = 2200;
+const INTRO_FADE_MS = 1800;
+
 export default function Sculpture() {
   const mount=useRef<HTMLDivElement>(null);
+  const poster=useRef<HTMLImageElement>(null);
   const controller=useRef<StellaratorController|null>(null);
   const [mode,setMode]=useState<StellaratorMode>('particle');
+  const [intro,setIntro]=useState<'holding'|'fading'|'done'>('holding');
+  const [posterReady,setPosterReady]=useState(false);
   const [paused,setPaused]=useState(false);
   const [ready,setReady]=useState(false);
   const [unavailable,setUnavailable]=useState(false);
   const [explanation,setExplanation]=useState(false);
   const [retry,setRetry]=useState(0);
-  const settings=useRef({mode,paused}); settings.current={mode,paused:paused||explanation};
-  const current=MODES[mode];
+  const scenePaused=paused||explanation||intro==='holding';
+  const settings=useRef({mode,paused:scenePaused}); settings.current={mode,paused:scenePaused};
+  const showScene=ready&&intro!=='holding';
+  const posterMode=intro==='done'?mode:'form';
+  const current=MODES[intro==='holding'?'form':mode];
+
+  function chooseMode(value:StellaratorMode){setIntro('done');setMode(value);}
+
+  useEffect(()=>{
+    const image=poster.current;if(!image)return;
+    let cancelled=false;
+    image.decode().then(()=>{if(!cancelled)setPosterReady(true);}).catch(()=>{
+      if(!cancelled)setIntro('done');
+    });
+    return ()=>{cancelled=true;};
+  },[]);
+
+  useEffect(()=>{
+    if(intro!=='holding'||!posterReady||!ready||explanation)return;
+    let timer:ReturnType<typeof setTimeout>|undefined;
+    const schedule=()=>{
+      clearTimeout(timer);
+      if(!document.hidden)timer=setTimeout(()=>setIntro(paused?'done':'fading'),INTRO_HOLD_MS);
+    };
+    schedule();document.addEventListener('visibilitychange',schedule);
+    return ()=>{clearTimeout(timer);document.removeEventListener('visibilitychange',schedule);};
+  },[intro,posterReady,ready,explanation,paused]);
+
+  useEffect(()=>{
+    if(intro!=='fading')return;
+    if(!ready){setIntro('holding');return;}
+    const timer=setTimeout(()=>setIntro('done'),paused?0:INTRO_FADE_MS);
+    return ()=>clearTimeout(timer);
+  },[intro,ready,paused]);
 
   useEffect(()=>{
     const motion=window.matchMedia('(prefers-reduced-motion: reduce)');
-    setPaused(motion.matches);settings.current.paused=motion.matches;
+    setPaused(motion.matches);
     const changed=()=>setPaused(motion.matches);motion.addEventListener('change',changed);
     return ()=>motion.removeEventListener('change',changed);
   },[]);
@@ -51,21 +89,21 @@ export default function Sculpture() {
     return ()=>{disposed=true;abort.abort();controller.current?.dispose();controller.current=null;};
   },[retry]);
   useEffect(()=>{controller.current?.setMode(mode);},[mode]);
-  useEffect(()=>{controller.current?.setPaused(paused||explanation);},[paused,explanation]);
+  useEffect(()=>{controller.current?.setPaused(scenePaused);},[scenePaused]);
 
   return <>
     <div className="stellarator-heading"><span className="stellarator-mark">✳</span><div><span>WENDELSTEIN 7-X</span><small>A STUDY IN CONFINEMENT</small></div><button className="stellarator-info" onClick={()=>setExplanation(true)} aria-label="Learn about the stellarator model and its physics"><Info size={16}/></button></div>
-    <div className={`sculpture-frame stellarator-frame ${ready?'scene-ready':''}`}>
-      <img className="sculpture-fallback" src={`/images/stellarator-${mode}.png`} alt={FALLBACK_ALT[mode]} width="1400" height="1400" fetchPriority="high"/>
-      <div className="scene-canvas" ref={mount} tabIndex={ready?0:-1} role="group" aria-label={`${current.label} view of Wendelstein 7-X. Drag or use arrow keys to rotate. Press Home to reset.`}/>
+    <div className={`sculpture-frame stellarator-frame ${showScene?'scene-ready':''} ${intro!=='done'?'is-introducing':''}`}>
+      <img ref={poster} className="sculpture-fallback" src={`/images/stellarator-${posterMode}.png`} alt={FALLBACK_ALT[posterMode]} width="1400" height="1400" fetchPriority="high"/>
+      <div className="scene-canvas" ref={mount} tabIndex={showScene?0:-1} role="group" aria-label={`${current.label} view of Wendelstein 7-X. Drag or use arrow keys to rotate. Press Home to reset.`}/>
     </div>
     <div className="scene-ui stellarator-ui">
       <div className="stellarator-caption" aria-live="polite"><span className="stellarator-view-index">{current.index} /</span><p>{current.title}</p></div>
       <div className="scene-controls">
-        <Tabs value={mode} onValueChange={value=>setMode(value as StellaratorMode)} className="material-tabs"><TabsList aria-label="Stellarator view"><TabsTrigger value="form">Form</TabsTrigger><TabsTrigger value="magnetic">Magnetic</TabsTrigger><TabsTrigger value="particle">Particle</TabsTrigger></TabsList></Tabs>
+        <Tabs value={intro==='holding'?'form':mode} onValueChange={value=>chooseMode(value as StellaratorMode)} className="material-tabs"><TabsList aria-label="Stellarator view"><TabsTrigger value="form" onClick={()=>chooseMode('form')}>Form</TabsTrigger><TabsTrigger value="magnetic" onClick={()=>chooseMode('magnetic')}>Magnetic</TabsTrigger><TabsTrigger value="particle" onClick={()=>chooseMode('particle')}>Particle</TabsTrigger></TabsList></Tabs>
       </div>
-      <div className="stellarator-legend">{(!ready&&mode==='magnetic'?current.legend.slice(0,1):current.legend).map(([color,label])=><span key={label}><i style={{background:color}}/>{label}</span>)}</div>
-      <p className="stellarator-note">{unavailable?'Still-image mode · Interactive 3D unavailable':ready?'Drag to explore · Educational visualization':'Preparing the magnetic geometry…'}{unavailable&&<button onClick={()=>setRetry(n=>n+1)}>Retry 3D</button>}</p>
+      <div className="stellarator-legend">{(!showScene&&mode==='magnetic'?current.legend.slice(0,1):current.legend).map(([color,label])=><span key={label}><i style={{background:color}}/>{label}</span>)}</div>
+      <p className="stellarator-note">{unavailable?'Still-image mode · Interactive 3D unavailable':showScene?'Drag to explore · Educational visualization':ready?'Educational visualization':'Preparing the magnetic geometry…'}{unavailable&&<button onClick={()=>setRetry(n=>n+1)}>Retry 3D</button>}</p>
     </div>
     <Dialog open={explanation} onOpenChange={setExplanation}><DialogContent className="project-dialog stellarator-dialog">
       <span className="eyebrow">WENDELSTEIN 7-X / BEHIND THE GEOMETRY</span>

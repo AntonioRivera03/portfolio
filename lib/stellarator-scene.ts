@@ -12,7 +12,7 @@ export type StellaratorController = {
 };
 type FieldData = { paths: { points: XYZ[] }[] };
 const DEFAULT_ROTATION = { x: 0, y: -.1 };
-const PARTICLE_TIME_SCALE = .75;
+const PARTICLE_TIME_SCALE = .525;
 
 function releaseObject(root: T.Object3D) {
   const geometries = new Set<T.BufferGeometry>();
