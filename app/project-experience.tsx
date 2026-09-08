@@ -409,7 +409,6 @@ function AicornPage() {
             </small>
           </div>
           <div className="ai-art-caption">
-            <span>ONE CONNECTED WORKSPACE</span>
             <button
               aria-label={
                 flowing
@@ -657,10 +656,6 @@ function KernelPage() {
           <div className="kernel-core-caption">
             <span className="kernel-signal" />
             THE LOCAL CORE
-          </div>
-          <div className="kernel-system-bottom">
-            <span>EVERY ACTION HAS A HISTORY.</span>
-            <span>↗</span>
           </div>
         </div>
       </section>

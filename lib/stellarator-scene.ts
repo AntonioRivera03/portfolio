@@ -294,7 +294,11 @@ export async function createStellaratorScene(
     // A stationary Form view and any paused scene render only on demand.
     if(dirty||(!paused&&mode!=='form'))schedule();
   }
-  applyMode(options.mode);machine.rotation.set(target.x,target.y,0);updateProbe();renderer.render(scene,camera);options.onContext(true);schedule();
+  applyMode(options.mode);
+  // The first live frame matches the selected view at full opacity.
+  opacityCurrent=opacityTarget;
+  plasmaMaterial.uniforms.uOpacity.value=opacityCurrent;
+  machine.rotation.set(target.x,target.y,0);updateProbe();renderer.render(scene,camera);options.onContext(true);schedule();
   return {
     setMode(next){applyMode(next);schedule();},
     setPaused(next){paused=next;dirty=true;last=0;schedule();},

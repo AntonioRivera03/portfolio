@@ -7,6 +7,7 @@ import {
   Asterisk,
   Check,
   Copy,
+  Download,
   Mail,
 } from 'lucide-react';
 import ProjectExperience, {
@@ -119,7 +120,7 @@ export default function Home() {
             <span className="eyebrow">
               SOFTWARE ENGINEER × CREATIVE THINKER
             </span>
-            <span className="eyebrow">DALLAS, TX / EARTH</span>
+            <span className="eyebrow">AUSTIN, TEXAS</span>
           </div>
           <div className="hero-copy">
             <h1 id="hero-title">
@@ -129,10 +130,25 @@ export default function Home() {
               <span>possibility.</span>
               <Asterisk className="headline-star" aria-hidden="true" />
             </h1>
-            <p>
-              I’m Antonio. I turn complex problems into
-              <br className="desktop-br" /> thoughtful digital experiences.
-            </p>
+            <blockquote
+              className="hero-quote"
+              cite="https://sites.google.com/tc.columbia.edu/watchinggod/invitations-to-create/invitation-20-formalized-curiosity"
+            >
+              <p>
+                “Research is formalized curiosity.
+                <br className="desktop-br" /> It is poking and prying with a
+                purpose.”
+              </p>
+              <cite>
+                <a
+                  href="https://sites.google.com/tc.columbia.edu/watchinggod/invitations-to-create/invitation-20-formalized-curiosity"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Zora Neale Hurston · Dust Tracks on a Road
+                </a>
+              </cite>
+            </blockquote>
             <a className="pill-button primary-button" href="#work">
               Explore my work <ArrowDown size={17} />
             </a>
@@ -149,13 +165,18 @@ export default function Home() {
               SCROLL TO DISCOVER
             </a>
             <p>
-              A developer’s mind.
+              Software engineering.
               <br />
-              An explorer’s instinct.
+              Learning through experiments like this one.
             </p>
-            <span className="hero-coordinate">
+            <a
+              className="hero-coordinate"
+              href="https://github.com/AntonioRivera03"
+              target="_blank"
+              rel="noreferrer"
+            >
               ALWAYS A WORK IN PROGRESS <span>↗</span>
-            </span>
+            </a>
           </div>
         </section>
         <div className="manifesto-strip" aria-hidden="true">
@@ -177,9 +198,6 @@ export default function Home() {
         >
           <div className="section-label">
             <span className="eyebrow">01 / SELECTED WORK</span>
-            <span className="eyebrow">
-              TWO IN THE WORLD. ONE ON THE HORIZON.
-            </span>
           </div>
           <div className="section-heading" data-reveal>
             <h2 id="work-title">
@@ -263,52 +281,62 @@ export default function Home() {
           aria-labelledby="about-title"
         >
           <div className="section-label">
-            <span className="eyebrow">03 / THE HUMAN BEHIND THE CODE</span>
+            <span className="eyebrow">03 / ABOUT ME</span>
             <span className="eyebrow">ANTONIO RIVERA — SOFTWARE ENGINEER</span>
           </div>
           <div className="about-layout">
             <div data-reveal>
               <h2 id="about-title">
-                Good things start
+                Always learning.
                 <br />
-                with <em>“what if?”</em>
+                <em>Always exploring.</em>
               </h2>
               <div className="about-signature">
                 ar<span>✳</span>
               </div>
               <span className="eyebrow">
-                BASED IN DALLAS. THINKING EVERYWHERE.
+                BASED IN AUSTIN, TEXAS. ALWAYS CURIOUS.
               </span>
             </div>
             <div className="about-copy" data-reveal>
               <p className="large-copy">
-                I like the space between
+                I like figuring out how things work
                 <br />
-                <span>“could this work?”</span> and
-                <br />
-                <span>“I made it work.”</span>
+                <span>and building something useful.</span>
               </p>
               <p>
-                I’m Antonio, a software engineer in Dallas, Texas. My work moves
-                between human-centered platforms, AI integrations, and the
-                systems underneath them.
+                I’m Antonio, a software engineer based in Austin, Texas. At
+                Paycom and CGI, I built full-stack features, improved database
+                performance, and automated work that used to be done by hand. My
+                experience spans React interfaces, backend services, and the
+                testing that helps keep them reliable.
               </p>
               <p>
-                I care about the way things work and the way they feel. Clear
-                interfaces. Thoughtful decisions. Details that reward a closer
-                look.
+                Outside that work, I’ve built a patient-trial matching platform
+                and an electricity usage monitor. This portfolio gives me room
+                to keep learning, too: the stellarator above is an exploration
+                of geometry, motion, and interactive graphics through code.
               </p>
               <div className="capability-row">
-                <span>THE INTERFACE</span>
-                <p>React · TypeScript</p>
+                <span>LANGUAGES</span>
+                <p>
+                  PHP · Java · TypeScript · JavaScript · Python · SQL · C# ·
+                  Dart · Shell · Kotlin
+                </p>
               </div>
               <div className="capability-row">
-                <span>THE ENGINE</span>
-                <p>Go · Python · Rust · SQLite</p>
+                <span>FRAMEWORKS & LIBRARIES</span>
+                <p>
+                  React · Next.js · Flask · Django · Laminas · Express · Pandas
+                  · PHPUnit
+                </p>
               </div>
               <div className="capability-row">
-                <span>THE NEXT QUESTION</span>
-                <p>AI agents · Local-first systems</p>
+                <span>TOOLS & PRACTICE</span>
+                <p>
+                  Linux · Docker · AWS · Selenium · Unit testing · API
+                  integration · Query optimization
+                </p>
               </div>
             </div>
           </div>
@@ -351,6 +379,35 @@ export default function Home() {
               </button>
             </div>
           </div>
+          <nav
+            className="contact-resources"
+            aria-label="Resume and professional profiles"
+          >
+            <a
+              className="contact-resource-link resume-download"
+              href="/documents/Antonio-Rivera-Resume.pdf"
+              download="Antonio-Rivera-Resume.pdf"
+            >
+              <Download size={17} aria-hidden="true" />
+              Download resume <span className="resume-format">PDF</span>
+            </a>
+            <a
+              className="contact-resource-link"
+              href="https://www.linkedin.com/in/antonio-rivera-094438272/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              LinkedIn <ArrowUpRight size={17} aria-hidden="true" />
+            </a>
+            <a
+              className="contact-resource-link"
+              href="https://github.com/AntonioRivera03"
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub <ArrowUpRight size={17} aria-hidden="true" />
+            </a>
+          </nav>
           <div className="footer-bottom">
             <span>© 2026 Antonio Rivera</span>
             <span>BUILT WITH INTENTION. AND A LITTLE CURIOSITY.</span>

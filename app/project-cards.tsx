@@ -1,5 +1,4 @@
 import {
-  ArrowRight,
   Asterisk,
   Check,
   Cpu,
@@ -68,7 +67,6 @@ export function MatchVisual() {
           <Check size={12} /> Real collaboration
         </span>
       </div>
-      <span className="visual-caption">AN ILLUSTRATIVE MATCHING WORKFLOW</span>
     </div>
   );
 }
@@ -107,10 +105,6 @@ export function AIcornVisual() {
           <Check size={17} />
           <span>Task jobs</span>
         </div>
-      </div>
-      <div className="aicorn-status">
-        <i /> IDEAS, CONNECTED TO ACTION.
-        <ArrowRight size={16} />
       </div>
     </div>
   );
@@ -156,9 +150,6 @@ export function KernelVisual() {
           </p>
         </div>
       </div>
-      <span className="visual-caption">
-        AN IDEA FOR AGENTS YOU CAN UNDERSTAND.
-      </span>
     </div>
   );
 }
