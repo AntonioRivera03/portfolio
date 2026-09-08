@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import Image from 'next/image';
+import { publicAsset } from '@/lib/site-paths';
 import { Dialog } from '@base-ui/react/dialog';
 import {
   ArrowDown,
@@ -372,7 +373,7 @@ function AicornPage() {
           <Image
             unoptimized
             className="ai-conductor-render"
-            src="/images/aicorn-conductor.webp"
+            src={publicAsset('/images/aicorn-conductor.webp')}
             alt="A sculptural Conductor hub with copper nerve-like branches connecting a constellation of floating tickets"
             width="1400"
             height="1200"

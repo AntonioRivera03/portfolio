@@ -11,6 +11,14 @@ npm run dev
 
 `npm run build` builds the Cloudflare Worker and browser assets. The Sites project is recorded in `.openai/hosting.json`.
 
+## GitHub Pages
+
+`npm run build:pages` exports the portfolio to `dist/client` for `https://antoniorivera03.github.io/portfolio/`. The workflow in `.github/workflows/pages.yml` tests and publishes it on pushes to `main`, manual runs, and daily at 11:17 UTC. GitHub Pages must use GitHub Actions as its publishing source.
+
+The Pages build fetches the public contribution calendar and serves it as static JSON. If GitHub is unavailable, it retains the clearly dated saved snapshot. The existing Sites build continues to use its live API endpoint. Assets and the résumé download use the repository path; the server build uses root paths.
+
+Vinext beta.5 exports this one-page site without Next.js `basePath`, which would prevent its prerenderer from requesting `/`. Vite's asset base, an absolute asset prefix, and `lib/site-paths.ts` handle the Pages mount path. The build checks that the exported HTML exists before deployment. Revisit routing if adding actual page routes beyond the current hash links and project dialogs.
+
 ## Content
 
 - `app/page.tsx`: profile and project entry points. LivedMatch and AICorn are real projects.

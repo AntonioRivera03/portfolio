@@ -1,6 +1,7 @@
 import * as T from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { toScenePoint, type XYZ } from './stellarator-math';
+import { publicAsset } from './site-paths';
 
 export type StellaratorMode = 'form' | 'magnetic' | 'particle';
 export type StellaratorController = {
@@ -107,14 +108,14 @@ export async function createStellaratorScene(
   options: { signal: AbortSignal; mode: StellaratorMode; paused: boolean; onContext: (available: boolean) => void },
 ): Promise<StellaratorController> {
   const [modelResponse, fieldResponse] = await Promise.all([
-    fetch('/images/stellarator.glb', { signal: options.signal }),
-    fetch('/data/stellarator-fieldlines.json', { signal: options.signal }),
+    fetch(publicAsset('/images/stellarator.glb'), { signal: options.signal }),
+    fetch(publicAsset('/data/stellarator-fieldlines.json'), { signal: options.signal }),
   ]);
   if (!modelResponse.ok || !fieldResponse.ok) throw new Error('Stellarator assets unavailable');
   const [buffer, rawData] = await Promise.all([modelResponse.arrayBuffer(), fieldResponse.json()]);
   const field = rawData as FieldData;
   if (!field.paths?.length || field.paths.some(path => path.points.length < 4)) throw new Error('Invalid field paths');
-  const gltf = await new GLTFLoader().parseAsync(buffer, '/images/');
+  const gltf = await new GLTFLoader().parseAsync(buffer, publicAsset('/images/'));
   if (options.signal.aborted) { releaseObject(gltf.scene); throw new DOMException('Aborted','AbortError'); }
   let renderer: T.WebGLRenderer;
   try { renderer = new T.WebGLRenderer({ alpha:true, antialias:true, powerPreference:'low-power' }); }

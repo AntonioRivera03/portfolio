@@ -35,6 +35,15 @@ const localBindingConfig = {
 };
 
 export default defineConfig(async () => {
+  if (process.env.GITHUB_PAGES === 'true') {
+    return {
+      // Pages hosts this single-page export under the repository path.
+      base: `${process.env.NEXT_PUBLIC_BASE_PATH ?? '/portfolio'}/`,
+      css: { postcss: { plugins: [tailwindcss()] } },
+      plugins: [vinext()],
+    };
+  }
+
   // Keep Wrangler and Miniflare state project-local. These are non-secret tool
   // settings; application environment belongs in ignored `.env*` files.
   process.env.WRANGLER_WRITE_LOGS ??= 'false';

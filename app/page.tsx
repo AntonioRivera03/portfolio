@@ -17,6 +17,7 @@ import ProjectExperience, {
 import { MatchVisual, AIcornVisual, KernelVisual } from './project-cards';
 import Sculpture from './sculpture';
 import ActivityLandscape from './activity';
+import { publicAsset } from '@/lib/site-paths';
 
 const projects = {
   livedmatch: {
@@ -385,7 +386,7 @@ export default function Home() {
           >
             <a
               className="contact-resource-link resume-download"
-              href="/documents/Antonio-Rivera-Resume.pdf"
+              href={publicAsset('/documents/Antonio-Rivera-Resume.pdf')}
               download="Antonio-Rivera-Resume.pdf"
             >
               <Download size={17} aria-hidden="true" />

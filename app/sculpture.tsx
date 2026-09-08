@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { publicAsset } from '@/lib/site-paths';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import type {
   StellaratorController,
@@ -129,7 +130,7 @@ export default function Sculpture() {
       >
         <img
           className="sculpture-fallback"
-          src={`/images/stellarator-${mode}.png`}
+          src={publicAsset(`/images/stellarator-${mode}.png`)}
           alt={FALLBACK_ALT[mode]}
           width="1400"
           height="1400"

@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowUpRight, Code2 } from 'lucide-react';
 import snapshot from './data/contributions.json';
+import { isStaticSite, publicAsset } from '@/lib/site-paths';
 
 type Activity = typeof snapshot;
 const dayLabel = (date: string) => new Date(`${date}T12:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
@@ -12,7 +13,8 @@ export default function ActivityLandscape() {
   const [status, setStatus] = useState('Saved snapshot');
   useEffect(() => {
     const controller = new AbortController();
-    fetch('/api/contributions', { signal: controller.signal }).then(r => { if (!r.ok) throw new Error(); return r.json(); }).then((value: unknown) => {
+    const endpoint = isStaticSite ? publicAsset('/data/contributions.json') : '/api/contributions';
+    fetch(endpoint, { signal: controller.signal }).then(r => { if (!r.ok) throw new Error(); return r.json(); }).then((value: unknown) => {
       const result = value as Activity & { fresh?: boolean };
       if (Array.isArray(result.days) && result.days.length === 30) { setData(result); setStatus(result.fresh ? 'Synced with GitHub' : 'Saved snapshot'); }
     }).catch(() => {});
