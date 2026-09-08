@@ -293,7 +293,12 @@ export default function Home() {
                 <em>Always exploring.</em>
               </h2>
               <div className="about-signature">
-                ar<span>✳</span>
+                ar
+                <Asterisk
+                  className="signature-star"
+                  strokeWidth={1.4}
+                  aria-hidden="true"
+                />
               </div>
               <span className="eyebrow">
                 BASED IN AUSTIN, TEXAS. ALWAYS CURIOUS.

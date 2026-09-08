@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { Asterisk } from 'lucide-react';
 import { publicAsset } from '@/lib/site-paths';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import type {
@@ -119,7 +120,11 @@ export default function Sculpture() {
   return (
     <>
       <div className="stellarator-heading">
-        <span className="stellarator-mark">✳</span>
+        <Asterisk
+          className="stellarator-mark"
+          strokeWidth={1.4}
+          aria-hidden="true"
+        />
         <div>
           <span>WENDELSTEIN 7-X</span>
           <small>Stellarator 3D render</small>
