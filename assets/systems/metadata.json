@@ -1,0 +1,68 @@
+{
+  "name": "Precision Compute Stack",
+  "coordinateSystem": "Y-up glTF",
+  "layers": [
+    {
+      "name": "StackLayer_0",
+      "baseY": 0.0,
+      "label": "Power + I/O"
+    },
+    {
+      "name": "StackLayer_1",
+      "baseY": 1.2,
+      "label": "Thermal exchange"
+    },
+    {
+      "name": "StackLayer_2",
+      "baseY": 2.4,
+      "label": "Memory fabric"
+    },
+    {
+      "name": "StackLayer_3",
+      "baseY": 3.5999999999999996,
+      "label": "Compute module"
+    },
+    {
+      "name": "StackLayer_4",
+      "baseY": 4.8,
+      "label": "Machined enclosure"
+    }
+  ],
+  "bounds": {
+    "min": [
+      -3.009999990463257,
+      -0.44999998807907104,
+      -3.009999990463257
+    ],
+    "max": [
+      3.009999990463257,
+      5.02400016784668,
+      3.1700000762939453
+    ]
+  },
+  "camera": {
+    "position": [
+      10,
+      9,
+      13
+    ],
+    "target": [
+      0,
+      2.4,
+      0
+    ],
+    "orthographicVerticalSpan": 11.7,
+    "aspect": 0.8571428571428571
+  },
+  "meshCount": 27,
+  "drawCalls": 27,
+  "triangles": 29772,
+  "fileBytes": 1513016,
+  "materialPolicy": "All materials opaque, roughness .3-.5, metallic .0-.55, no textures, no environment dependency",
+  "render": {
+    "width": 1200,
+    "height": 1400,
+    "transparent": true
+  },
+  "animation": "Change StackLayer_N.position.y from its baseY. All child geometry is local to the centered layer parent."
+}

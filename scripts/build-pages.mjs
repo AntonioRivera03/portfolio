@@ -87,7 +87,7 @@ const yardHtml = await readFile(
   'utf8',
 );
 if (
-  !yardHtml.includes('scenic route.') ||
+  !yardHtml.includes('THE SYSTEMS YARD') ||
   !html.includes(`${basePath}/projects-yard/`)
 ) {
   throw new Error(

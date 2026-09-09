@@ -1,18 +1,14 @@
 import type { Metadata } from 'next';
-import ProjectTrail from '../project-trail';
+import SystemsYard from '../systems-yard';
 
 export const dynamic = 'force-static';
 
 export const metadata: Metadata = {
-  title: 'The Project Yard — Antonio Rivera',
+  title: 'The Systems Yard — Antonio Rivera',
   description:
-    'Take the scenic route. A Montana-inspired trail through projects, experiments, and things worth making.',
+    'Agent orchestration, local runtimes, and the machinery underneath the interface. Explore projects, technical concepts, and open-source work by Antonio Rivera.',
 };
 
 export default function ProjectsYardPage() {
-  return (
-    <main className="project-yard-page" aria-labelledby="yard-title">
-      <ProjectTrail />
-    </main>
-  );
+  return <SystemsYard />;
 }

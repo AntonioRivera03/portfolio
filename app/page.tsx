@@ -9,7 +9,7 @@ import {
   Copy,
   Download,
   Mail,
-  Mountain,
+  Cpu,
 } from 'lucide-react';
 import ProjectExperience, {
   type ProjectSelection,
@@ -269,11 +269,11 @@ export default function Home() {
           </div>
           <a className="yard-invitation" href={publicAsset('/projects-yard/')}>
             <span className="yard-invitation-mark">
-              <Mountain size={32} strokeWidth={1.2} />
+              <Cpu size={32} strokeWidth={1.2} />
             </span>
             <span>
-              <small>A DIFFERENT WAY TO EXPLORE</small>
-              <strong>Take the scenic route.</strong>
+              <small>PROJECTS, FROM THE INSIDE OUT</small>
+              <strong>Explore the systems yard.</strong>
             </span>
             <span className="yard-invitation-action">
               Enter the project yard <ArrowUpRight size={20} />
