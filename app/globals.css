@@ -62,6 +62,7 @@ html,body{overflow-x:clip}.scene-canvas:focus-visible{outline:1px dashed #d4ff72
 
 /* Resume and professional profiles in the opportunities section. */
 .contact-resources{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:40px}
+.yard-invitation{display:flex;align-items:center;gap:24px;padding:30px 0;border-block:1px solid var(--line);margin-top:55px}.yard-invitation-mark{display:grid;place-items:center;height:64px;width:64px;border:1px solid #65774c;border-radius:50%;color:var(--lime);flex-shrink:0}.yard-invitation>span:nth-child(2){display:flex;flex-direction:column;gap:8px}.yard-invitation small{font:10px 'IBM Plex Mono',monospace;letter-spacing:1.2px;color:var(--subtle)}.yard-invitation strong{font:32px Georgia,serif;letter-spacing:-1px;font-weight:400}.yard-invitation-action{display:flex;align-items:center;gap:24px;margin-left:auto;font-size:14px;color:var(--lime)}.yard-invitation:hover .yard-invitation-action svg{transform:translate(3px,-3px)}@media(max-width:600px){.yard-invitation{gap:16px;flex-wrap:wrap}.yard-invitation-mark{height:48px;width:48px}.yard-invitation strong{font-size:26px}.yard-invitation-action{margin-left:64px;font-size:13px}.site-header nav{gap:15px}.site-header nav a{font-size:11px}}
 .contact-resource-link{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:12px 18px;border:1px solid #171b1250;border-radius:100px;font-size:14px;font-weight:600;color:#171b12;transition:background .2s}
 .contact-resource-link:hover{background:#171b1212}
 .contact-resource-link svg{flex-shrink:0}
@@ -70,3 +71,4 @@ html,body{overflow-x:clip}.scene-canvas:focus-visible{outline:1px dashed #d4ff72
 .resume-format{font:12px 'IBM Plex Mono',monospace;font-weight:400}
 .contact-section :is(a,button):focus-visible{outline-color:#171b12}
 @media(max-width:600px){.contact-resources{gap:12px}.contact-resource-link{flex:1}.resume-download{flex-basis:100%}}
+@media(max-width:420px){.site-header nav a[href="#about"]{display:none}}

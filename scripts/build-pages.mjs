@@ -1,4 +1,11 @@
-import { access, mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
+import {
+  access,
+  copyFile,
+  mkdir,
+  readdir,
+  readFile,
+  writeFile,
+} from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { fetchContributionActivity } from '../lib/contributions.ts';
@@ -54,6 +61,16 @@ const build = spawnSync(
 if (build.error) throw build.error;
 if (build.status !== 0) process.exit(build.status ?? 1);
 
+// Preserve clean directory URLs on Pages without triggering Vinext's
+// trailing-slash redirect during its internal prerender requests.
+await mkdir(new URL('../dist/client/projects-yard/', import.meta.url), {
+  recursive: true,
+});
+await copyFile(
+  new URL('../dist/client/projects-yard.html', import.meta.url),
+  new URL('../dist/client/projects-yard/index.html', import.meta.url),
+);
+
 // An export must contain HTML; a successful server build alone cannot run on Pages.
 const html = await readFile(
   new URL('../dist/client/index.html', import.meta.url),
@@ -64,6 +81,18 @@ if (
   !html.includes(`${basePath}/documents/Antonio-Rivera-Resume.pdf`)
 ) {
   throw new Error('Static export is missing the portfolio or its resume link.');
+}
+const yardHtml = await readFile(
+  new URL('../dist/client/projects-yard/index.html', import.meta.url),
+  'utf8',
+);
+if (
+  !yardHtml.includes('scenic route.') ||
+  !html.includes(`${basePath}/projects-yard/`)
+) {
+  throw new Error(
+    'Static export is missing the project yard or its homepage link.',
+  );
 }
 
 // Catch missing prefixed scripts, styles, fonts, and public assets before upload.
@@ -80,8 +109,13 @@ async function checkAsset(value, from = siteUrl) {
     decodeURIComponent(url.pathname.slice(prefix.length)) || 'index.html';
   await access(new URL(relative, exportDir));
 }
-for (const [, value] of html.matchAll(/(?:src|href)="([^"]+)"/g)) {
-  await checkAsset(value);
+for (const [pageHtml, pageUrl] of [
+  [html, siteUrl],
+  [yardHtml, new URL('projects-yard/', siteUrl).href],
+]) {
+  for (const [, value] of pageHtml.matchAll(/(?:src|href)="([^"]+)"/g)) {
+    await checkAsset(value, pageUrl);
+  }
 }
 for (const file of await readdir(exportDir, { recursive: true })) {
   if (!file.endsWith('.css')) continue;

@@ -9,6 +9,7 @@ import {
   Copy,
   Download,
   Mail,
+  Mountain,
 } from 'lucide-react';
 import ProjectExperience, {
   type ProjectSelection,
@@ -102,6 +103,9 @@ export default function Home() {
         <nav aria-label="Main navigation">
           <a href="#work">
             Work <span>01</span>
+          </a>
+          <a href={publicAsset('/projects-yard/')}>
+            Project yard <ArrowUpRight size={13} />
           </a>
           <a href="#about">
             About <span>03</span>
@@ -263,6 +267,18 @@ export default function Home() {
               );
             })}
           </div>
+          <a className="yard-invitation" href={publicAsset('/projects-yard/')}>
+            <span className="yard-invitation-mark">
+              <Mountain size={32} strokeWidth={1.2} />
+            </span>
+            <span>
+              <small>A DIFFERENT WAY TO EXPLORE</small>
+              <strong>Take the scenic route.</strong>
+            </span>
+            <span className="yard-invitation-action">
+              Enter the project yard <ArrowUpRight size={20} />
+            </span>
+          </a>
           <div className="work-footnote">
             <span>THERE’S ALWAYS ANOTHER IDEA.</span>
             <a
