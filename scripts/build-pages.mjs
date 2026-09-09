@@ -87,7 +87,7 @@ const yardHtml = await readFile(
   'utf8',
 );
 if (
-  !yardHtml.includes('PROJECT NETWORK') ||
+  !yardHtml.includes('DEEP FIELD') ||
   !html.includes(`${basePath}/projects-yard/`)
 ) {
   throw new Error(

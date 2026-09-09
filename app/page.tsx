@@ -272,8 +272,8 @@ export default function Home() {
               <Cpu size={32} strokeWidth={1.2} />
             </span>
             <span>
-              <small>DISPATCH / EVERY SYSTEM, A MOVING PART</small>
-              <strong>Enter the project network.</strong>
+              <small>SOFTWARE, AT EVERY SCALE</small>
+              <strong>Enter the Deep Field.</strong>
             </span>
             <span className="yard-invitation-action">
               Enter the project yard <ArrowUpRight size={20} />

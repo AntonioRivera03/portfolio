@@ -1,0 +1,618 @@
+{
+  "name": "DeepField / Array Observatory",
+  "coordinateSystem": "Y-up glTF",
+  "units": "metres",
+  "stations": [
+    {
+      "name": "HeroStation",
+      "position": [
+        8,
+        0,
+        8
+      ],
+      "scale": 1.0,
+      "azimuth": {
+        "name": "Hero_Azimuth",
+        "axis": "Y",
+        "baseRadians": -0.3141592653589793,
+        "worldPivot": [
+          8,
+          4.0,
+          8
+        ]
+      },
+      "elevation": {
+        "name": "Hero_Elevation",
+        "axis": "X",
+        "baseRadians": 0.6108652381980153,
+        "worldPivot": [
+          8,
+          12.0,
+          8
+        ],
+        "localPivot": [
+          0,
+          8,
+          0
+        ],
+        "rangeRadians": [
+          0.16,
+          1.12
+        ]
+      },
+      "apertureRadius": 9.0,
+      "receiverLocalToElevation": [
+        0,
+        8.3,
+        0
+      ],
+      "apertureVertexLocalToElevation": [
+        0,
+        1.7,
+        0
+      ]
+    },
+    {
+      "name": "Station_1",
+      "position": [
+        -20,
+        0,
+        -8
+      ],
+      "scale": 0.54,
+      "azimuth": {
+        "name": "Station_1_Azimuth",
+        "axis": "Y",
+        "baseRadians": 0.20943951023931956,
+        "worldPivot": [
+          -20,
+          2.16,
+          -8
+        ]
+      },
+      "elevation": {
+        "name": "Station_1_Elevation",
+        "axis": "X",
+        "baseRadians": 0.5410520681182421,
+        "worldPivot": [
+          -20,
+          6.48,
+          -8
+        ],
+        "localPivot": [
+          0,
+          8,
+          0
+        ],
+        "rangeRadians": [
+          0.16,
+          1.12
+        ]
+      },
+      "apertureRadius": 4.86,
+      "receiverLocalToElevation": [
+        0,
+        8.3,
+        0
+      ],
+      "apertureVertexLocalToElevation": [
+        0,
+        1.7,
+        0
+      ]
+    },
+    {
+      "name": "Station_2",
+      "position": [
+        28,
+        0,
+        -20
+      ],
+      "scale": 0.57,
+      "azimuth": {
+        "name": "Station_2_Azimuth",
+        "axis": "Y",
+        "baseRadians": -0.24434609527920614,
+        "worldPivot": [
+          28,
+          2.28,
+          -20
+        ]
+      },
+      "elevation": {
+        "name": "Station_2_Elevation",
+        "axis": "X",
+        "baseRadians": 0.7155849933176751,
+        "worldPivot": [
+          28,
+          6.84,
+          -20
+        ],
+        "localPivot": [
+          0,
+          8,
+          0
+        ],
+        "rangeRadians": [
+          0.16,
+          1.12
+        ]
+      },
+      "apertureRadius": 5.13,
+      "receiverLocalToElevation": [
+        0,
+        8.3,
+        0
+      ],
+      "apertureVertexLocalToElevation": [
+        0,
+        1.7,
+        0
+      ]
+    },
+    {
+      "name": "Station_3",
+      "position": [
+        -16,
+        0,
+        -38
+      ],
+      "scale": 0.51,
+      "azimuth": {
+        "name": "Station_3_Azimuth",
+        "axis": "Y",
+        "baseRadians": 0.4537856055185257,
+        "worldPivot": [
+          -16,
+          2.04,
+          -38
+        ]
+      },
+      "elevation": {
+        "name": "Station_3_Elevation",
+        "axis": "X",
+        "baseRadians": 0.5061454830783556,
+        "worldPivot": [
+          -16,
+          6.12,
+          -38
+        ],
+        "localPivot": [
+          0,
+          8,
+          0
+        ],
+        "rangeRadians": [
+          0.16,
+          1.12
+        ]
+      },
+      "apertureRadius": 4.59,
+      "receiverLocalToElevation": [
+        0,
+        8.3,
+        0
+      ],
+      "apertureVertexLocalToElevation": [
+        0,
+        1.7,
+        0
+      ]
+    },
+    {
+      "name": "Station_4",
+      "position": [
+        10,
+        0,
+        -48
+      ],
+      "scale": 0.55,
+      "azimuth": {
+        "name": "Station_4_Azimuth",
+        "axis": "Y",
+        "baseRadians": -0.08726646259971647,
+        "worldPivot": [
+          10,
+          2.2,
+          -48
+        ]
+      },
+      "elevation": {
+        "name": "Station_4_Elevation",
+        "axis": "X",
+        "baseRadians": 0.8028514559173916,
+        "worldPivot": [
+          10,
+          6.6000000000000005,
+          -48
+        ],
+        "localPivot": [
+          0,
+          8,
+          0
+        ],
+        "rangeRadians": [
+          0.16,
+          1.12
+        ]
+      },
+      "apertureRadius": 4.95,
+      "receiverLocalToElevation": [
+        0,
+        8.3,
+        0
+      ],
+      "apertureVertexLocalToElevation": [
+        0,
+        1.7,
+        0
+      ]
+    },
+    {
+      "name": "Station_5",
+      "position": [
+        38,
+        0,
+        8
+      ],
+      "scale": 0.59,
+      "azimuth": {
+        "name": "Station_5_Azimuth",
+        "axis": "Y",
+        "baseRadians": -0.5759586531581288,
+        "worldPivot": [
+          38,
+          2.36,
+          8
+        ]
+      },
+      "elevation": {
+        "name": "Station_5_Elevation",
+        "axis": "X",
+        "baseRadians": 0.6457718232379019,
+        "worldPivot": [
+          38,
+          7.08,
+          8
+        ],
+        "localPivot": [
+          0,
+          8,
+          0
+        ],
+        "rangeRadians": [
+          0.16,
+          1.12
+        ]
+      },
+      "apertureRadius": 5.31,
+      "receiverLocalToElevation": [
+        0,
+        8.3,
+        0
+      ],
+      "apertureVertexLocalToElevation": [
+        0,
+        1.7,
+        0
+      ]
+    }
+  ],
+  "cameras": {
+    "wide": {
+      "position": [
+        61,
+        42,
+        76
+      ],
+      "target": [
+        -4,
+        6,
+        -8
+      ],
+      "lens": 40,
+      "verticalFovDegrees": 31.41727565803149
+    },
+    "hero": {
+      "position": [
+        40,
+        29,
+        46
+      ],
+      "target": [
+        8,
+        10.5,
+        8
+      ],
+      "lens": 44,
+      "verticalFovDegrees": 28.684452060787162
+    },
+    "service": {
+      "position": [
+        -1,
+        13,
+        44
+      ],
+      "target": [
+        -17,
+        3.2,
+        27
+      ],
+      "lens": 44,
+      "verticalFovDegrees": 28.684452060787162
+    },
+    "array": {
+      "position": [
+        52,
+        48,
+        17
+      ],
+      "target": [
+        2,
+        5,
+        -24
+      ],
+      "lens": 44,
+      "verticalFovDegrees": 28.684452060787162
+    }
+  },
+  "buildings": {
+    "CorrelatorHall": {
+      "position": [
+        -17,
+        0,
+        15
+      ],
+      "bounds": {
+        "min": [
+          -28.8,
+          0,
+          8.2
+        ],
+        "max": [
+          -5.2,
+          8.8,
+          21.8
+        ]
+      }
+    },
+    "InstrumentWorkshop": {
+      "position": [
+        -17,
+        0,
+        28
+      ],
+      "bounds": {
+        "min": [
+          -24.9,
+          0,
+          21.1
+        ],
+        "max": [
+          -9.1,
+          9,
+          34.9
+        ]
+      }
+    }
+  },
+  "mechanicalRigs": [
+    {
+      "name": "Gantry_Bridge",
+      "parent": "InstrumentWorkshop",
+      "axis": "Z",
+      "basePosition": [
+        0,
+        6.38,
+        1.8
+      ],
+      "range": [
+        -4.6,
+        4.6
+      ]
+    },
+    {
+      "name": "Gantry_Trolley",
+      "parent": "Gantry_Bridge",
+      "axis": "X",
+      "basePosition": [
+        0,
+        -0.28,
+        0
+      ],
+      "range": [
+        -4.45,
+        4.45
+      ]
+    },
+    {
+      "name": "Gantry_Hoist",
+      "parent": "Gantry_Trolley",
+      "axis": "Y",
+      "basePosition": [
+        0,
+        -2.75,
+        0
+      ],
+      "range": [
+        -4.45,
+        -1.35
+      ]
+    },
+    {
+      "name": "Gantry_Cables",
+      "parent": "Gantry_Trolley",
+      "axis": "scale.y",
+      "basePosition": [
+        0,
+        -0.5,
+        0
+      ],
+      "baseScale": [
+        1,
+        0.9,
+        1
+      ],
+      "note": "Set scale.y = (-hoist.position.y - .5) / 2.5 so the cables stay attached."
+    },
+    {
+      "name": "CoolingFan_0",
+      "axis": "rotation.y"
+    },
+    {
+      "name": "CoolingFan_1",
+      "axis": "rotation.y"
+    },
+    {
+      "name": "CoolingFan_2",
+      "axis": "rotation.y"
+    },
+    {
+      "name": "CoolingFan_3",
+      "axis": "rotation.y"
+    }
+  ],
+  "signalTrunks": [
+    [
+      [
+        8,
+        0.25,
+        8
+      ],
+      [
+        8,
+        0.25,
+        2
+      ],
+      [
+        -4,
+        0.25,
+        2
+      ],
+      [
+        -4,
+        0.25,
+        13
+      ],
+      [
+        -6,
+        0.25,
+        13
+      ]
+    ],
+    [
+      [
+        -20,
+        0.25,
+        -8
+      ],
+      [
+        -20,
+        0.25,
+        -12
+      ],
+      [
+        -4,
+        0.25,
+        -12
+      ],
+      [
+        -4,
+        0.25,
+        13
+      ]
+    ],
+    [
+      [
+        28,
+        0.25,
+        -20
+      ],
+      [
+        28,
+        0.25,
+        -12
+      ],
+      [
+        -4,
+        0.25,
+        -12
+      ]
+    ],
+    [
+      [
+        -16,
+        0.25,
+        -38
+      ],
+      [
+        -16,
+        0.25,
+        -42
+      ],
+      [
+        -4,
+        0.25,
+        -42
+      ],
+      [
+        -4,
+        0.25,
+        -12
+      ]
+    ],
+    [
+      [
+        10,
+        0.25,
+        -48
+      ],
+      [
+        10,
+        0.25,
+        -42
+      ],
+      [
+        -4,
+        0.25,
+        -42
+      ]
+    ],
+    [
+      [
+        38,
+        0.25,
+        8
+      ],
+      [
+        38,
+        0.25,
+        2
+      ],
+      [
+        8,
+        0.25,
+        2
+      ]
+    ]
+  ],
+  "uniqueTriangles": 85268,
+  "renderedTriangles": 318976,
+  "drawCalls": 134,
+  "meshDatablocks": 53,
+  "fileBytes": 4327868,
+  "terrainBounds": {
+    "min": [
+      -1000,
+      -1.66,
+      -1000
+    ],
+    "max": [
+      1000,
+      -0.06,
+      1000
+    ]
+  },
+  "materialPolicy": "Opaque rough materials. No textures; scene lights are retained only in the blend, not GLB.",
+  "notes": "Original fictional observatory. All six station yokes yaw about local Y, dishes tilt rigidly about local X. Elevation 0 is zenith. Shared station geometry is instanced by material. Parent transforms are already applied at the rig nodes; do not normalize the GLB root using its terrain bounds."
+}
