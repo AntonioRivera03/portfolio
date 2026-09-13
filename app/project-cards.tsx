@@ -20,12 +20,12 @@ export function MatchVisual() {
           </span>
           livedmatch
         </span>
-        <span>MEANINGFUL CONNECTIONS</span>
+        <span>LIVE MATCHING PLATFORM</span>
       </div>
       <div className="match-headline">
-        Better research.
+        Research matched
         <br />
-        <em>More human.</em>
+        <em>with lived experience.</em>
       </div>
       <div className="matching-flow">
         <div className="flow-person">
@@ -33,7 +33,7 @@ export function MatchVisual() {
             <Users size={26} />
           </div>
           <span>Lived experience</span>
-          <small>Your perspective matters.</small>
+          <small>People sign up with their background.</small>
         </div>
         <div className="connection-line">
           <i />
@@ -53,18 +53,18 @@ export function MatchVisual() {
             <Layers size={26} />
           </div>
           <span>Research projects</span>
-          <small>Built around real people.</small>
+          <small>Researchers post studies.</small>
         </div>
       </div>
       <div className="match-bottom">
         <span>
-          <Check size={12} /> Shared purpose
+          <Check size={12} /> Compatibility scores
         </span>
         <span>
-          <Check size={12} /> Mutual choice
+          <Check size={12} /> Role-based access
         </span>
         <span>
-          <Check size={12} /> Real collaboration
+          <Check size={12} /> Follow-up surveys
         </span>
       </div>
     </div>

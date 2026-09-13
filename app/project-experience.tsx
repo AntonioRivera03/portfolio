@@ -114,26 +114,27 @@ function LivedMatchPage() {
       <section className="lm-hero experience-section">
         <div className="lm-hero-copy">
           <span className="experience-kicker">
-            <span /> PEOPLE FIRST. ALWAYS.
+            <span /> A LIVE PLATFORM
           </span>
           <Dialog.Title className="experience-title">
-            Better research.
+            Research studies,
             <br />
-            <em>More human.</em>
+            <em>matched with the right people.</em>
           </Dialog.Title>
           <Dialog.Description className="experience-intro">
-            The people living the experience deserve a place in the research.
-            LivedMatch helps them find it.
+            LivedMatch connects researchers with people who have relevant lived
+            experience. Organizations post studies; the platform matches them
+            with community members and tracks the partnership.
           </Dialog.Description>
           <ProjectLink project="livedmatch">Meet LivedMatch</ProjectLink>
           <div className="lm-hero-note">
             <HeartHandshake size={19} />
-            <span>Good matches. Meaningful work.</span>
+            <span>Live at livedmatch.com</span>
           </div>
         </div>
         <div className="lm-match-study">
           <div className="lm-study-overline">
-            <span>A CONNECTION WORTH MAKING</span>
+            <span>HOW MATCHING WORKS</span>
             <Asterisk size={25} />
           </div>
           <div className="lm-study-window">
@@ -206,42 +207,40 @@ function LivedMatchPage() {
       </section>
       <section className="lm-story experience-section">
         <div className="lm-story-heading">
-          <span className="experience-kicker">
-            LESS GUESSWORK. MORE CONNECTION.
-          </span>
+          <span className="experience-kicker">HOW IT WORKS</span>
           <h2>
-            The right introduction
+            From study posting
             <br />
-            can change <em>the whole study.</em>
+            to <em>matched participants.</em>
           </h2>
           <p>
-            Organizations know their communities. Researchers know their
-            questions. LivedMatch brings the two together.
+            Organizations post research questions; LivedMatch matches them with
+            people in the community.
           </p>
         </div>
         <div className="lm-steps">
           <div>
             <span className="lm-step-number">01</span>
-            <h3>Start with trust.</h3>
+            <h3>Post a study.</h3>
             <p>
-              Organizations set the questions and decide who gets access to
-              their community.
+              Organizations define the research question and set who gets
+              access to their community.
             </p>
           </div>
           <div>
             <span className="lm-step-number">02</span>
-            <h3>Find the real fit.</h3>
+            <h3>Get a shortlist.</h3>
             <p>
-              Shared questions and weighted answers turn a pile of applicants
-              into a thoughtful shortlist.
+              Shared questions with weighted answers rank applicants into a
+              shortlist with compatibility scores.
             </p>
           </div>
           <div>
             <span className="lm-step-number">03</span>
-            <h3>Stay for the follow-through.</h3>
+            <h3>Follow through.</h3>
             <p>
-              From the first hello to the final outcome, reminders and check-ins
-              keep the partnership moving.
+              Reminders, check-ins, and follow-up surveys track the partnership
+              from first introduction to outcome.
             </p>
           </div>
         </div>
@@ -250,14 +249,13 @@ function LivedMatchPage() {
         <div>
           <HeartHandshake size={26} />
           <h2>
-            A match is just
+            Matching is
             <br />
-            <em>the beginning.</em>
+            <em>the first step.</em>
           </h2>
           <p>
-            Because “Did anything come of it?”
-            <br />
-            should have a good answer.
+            The platform tracks what happens after the introduction:
+            conversations, check-ins, and outcomes.
           </p>
         </div>
         <ol className="lm-partnership">
@@ -266,8 +264,8 @@ function LivedMatchPage() {
               <Check size={15} />
             </span>
             <div>
-              <strong>The introduction</strong>
-              <small>A shared reason to connect.</small>
+              <strong>Introductions</strong>
+              <small>Researchers and participants connect over a shared study.</small>
             </div>
           </li>
           <li>
@@ -275,8 +273,8 @@ function LivedMatchPage() {
               <Users size={15} />
             </span>
             <div>
-              <strong>The first conversation</strong>
-              <small>A nudge if life gets in the way.</small>
+              <strong>Check-ins</strong>
+              <small>Reminders keep both sides engaged.</small>
             </div>
           </li>
           <li>
@@ -284,14 +282,14 @@ function LivedMatchPage() {
               <Asterisk size={18} />
             </span>
             <div>
-              <strong>Something worth sharing</strong>
-              <small>Follow-up surveys. Real outcomes. A full story.</small>
+              <strong>Outcomes</strong>
+              <small>Follow-up surveys record what each study produced.</small>
             </div>
           </li>
         </ol>
       </section>
       <footer className="experience-footer">
-        <span>Built around people, from the first question on.</span>
+        <span>Built with Next.js, Prisma, and NeonDB. Live at livedmatch.com.</span>
         <ProjectLink project="livedmatch">Visit LivedMatch</ProjectLink>
       </footer>
     </>
@@ -302,9 +300,9 @@ const conductorStages = [
   {
     name: 'Plan',
     icon: GitBranch,
-    title: 'A good start beats a long prompt.',
+    title: 'Plan first.',
     description:
-      'Conductor checks the requirements and gives the right planning agent the context to get started.',
+      'A planning agent reads the ticket, gathers context, and writes the implementation plan before any code is written.',
     ticket: 'Clarify the requirements',
     status: 'Planning agent assigned',
     code: 'AIC–021',
@@ -312,9 +310,9 @@ const conductorStages = [
   {
     name: 'Build',
     icon: Terminal,
-    title: 'Give every agent room to work.',
+    title: 'Build in isolation.',
     description:
-      'Implementation agents work in isolated Git worktrees, run their tests, and leave a clear record on the ticket.',
+      'Implementation agents work in isolated Git worktrees, run their tests, and record the results on the ticket.',
     ticket: 'Build the activity view',
     status: 'Implementation in progress',
     code: 'AIC–024',
@@ -322,9 +320,9 @@ const conductorStages = [
   {
     name: 'Review',
     icon: ShieldCheck,
-    title: 'The last word is yours.',
+    title: 'You approve the merge.',
     description:
-      'Finished work comes back to your review stage. Read the summary, check the changes, and decide what’s Done.',
+      'Finished work returns with a summary and a diff. You review the changes and decide what merges.',
     ticket: 'Ready for a human look',
     status: 'Waiting for your review',
     code: 'AIC–028',
@@ -350,20 +348,21 @@ function AicornPage() {
       <section className="ai-hero experience-section">
         <div className="ai-hero-copy">
           <span className="experience-kicker">
-            <span /> IDEAS, CONNECTED TO ACTION.
+            <span /> OPEN SOURCE · BUILT ON AYCORN
           </span>
           <Dialog.Title className="experience-title">
-            Many agents.
+            A task manager
             <br />
-            <em>One Conductor.</em>
+            <em>that delegates to AI agents.</em>
           </Dialog.Title>
           <Dialog.Description className="experience-intro">
-            Your backlog has potential. Give it a team that can get to work—with
-            you calling the shots.
+            AICorn extends the open-source Aycorn task manager with a Conductor
+            mode: AI agents plan, implement, and review tasks, and nothing
+            merges without your approval.
           </Dialog.Description>
           <ProjectLink project="aicorn">Explore AICorn</ProjectLink>
           <span className="ai-hero-credit">
-            PROJECT MANAGEMENT, MEET AI DEVELOPMENT.
+            REACT / TYPESCRIPT · GO MCP COMPANION
           </span>
         </div>
         <div
@@ -426,7 +425,7 @@ function AicornPage() {
       </section>
       <section className="ai-workflow experience-section">
         <div className="ai-section-topline">
-          <span className="experience-kicker">YOUR WORKFLOW. YOUR RULES.</span>
+          <span className="experience-kicker">HOW IT WORKS</span>
           <span className="experience-fineprint">Explore the handoff ↓</span>
         </div>
         <div
@@ -452,21 +451,21 @@ function AicornPage() {
         </div>
         <div className="ai-human-checkpoint">
           <ShieldCheck size={17} />
-          <span>Agents move the work forward. You decide when it’s Done.</span>
+          <span>Agents do the work. Nothing merges without your approval.</span>
         </div>
       </section>
       <section className="ai-principles experience-section">
         <div>
           <Users size={25} />
-          <h3>A team that fits.</h3>
+          <h3>Configure each agent.</h3>
           <p>
-            Give agents their own instructions and models. Choose who plans, and
-            who builds.
+            Each agent gets its own model and instructions. You choose which
+            agents plan and which build.
           </p>
         </div>
         <div>
           <GitBranch size={25} />
-          <h3>Room to make progress.</h3>
+          <h3>One shared board.</h3>
           <p>
             People and agents share one board. Every ticket has an owner and a
             visible next step.
@@ -474,10 +473,10 @@ function AicornPage() {
         </div>
         <div>
           <CircleDot size={25} />
-          <h3>No mystery handoffs.</h3>
+          <h3>No silent handoffs.</h3>
           <p>
-            Missing context gets flagged. Work comes back with tests, changes,
-            and a clear summary.
+            Missing context is flagged. Completed work returns with tests,
+            diffs, and a summary.
           </p>
         </div>
       </section>
@@ -548,24 +547,25 @@ function KernelPage() {
       <section className="kernel-hero experience-section">
         <div className="kernel-hero-copy">
           <span className="experience-kicker">
-            <span /> A SMALL EXPERIMENT IN AGENCY
+            <span /> PROPOSED · NOT BUILT YET
           </span>
           <Dialog.Title className="experience-title">
-            Let it think.
+            A local agent runtime
             <br />
-            Make it <em>ask.</em>
+            that <em>asks before writing.</em>
           </Dialog.Title>
           <Dialog.Description className="experience-intro">
-            An agent with room to explore. A runtime that knows where to stop.
-            Kernel is an idea for keeping powerful tools on your terms.
+            Kernel is a proposed Rust runtime for local AI agents. The agent
+            reads and plans freely, but every file write needs explicit
+            approval, and every tool call is recorded in an event journal.
           </Dialog.Description>
           <button className="experience-cta" onClick={demo}>
             Step inside the runtime <ArrowDown size={17} />
           </button>
           <div className="kernel-platform-note">
             <Terminal size={14} />
-            <span>LOCAL FIRST</span>
-            <span>RUST, AT HEART</span>
+            <span>LOCAL-FIRST</span>
+            <span>RUST (PROPOSED)</span>
           </div>
         </div>
         <div
@@ -662,15 +662,15 @@ function KernelPage() {
       </section>
       <section className="kernel-demo-section experience-section" ref={demoRef}>
         <div className="kernel-demo-copy">
-          <span className="experience-kicker">A LITTLE TRUST EXERCISE</span>
+          <span className="experience-kicker">HOW IT WOULD WORK</span>
           <h2>
-            Watch it work.
+            Read, plan,
             <br />
-            <em>Then draw the line.</em>
+            <em>then ask permission.</em>
           </h2>
           <p>
-            One small task. A trace you can follow. And a moment where nothing
-            happens until you say so.
+            A scripted walkthrough: the agent reads a workspace, proposes a
+            change, and stops until you approve or deny it.
           </p>
           <div className="kernel-demo-boundaries">
             <span>
@@ -798,38 +798,39 @@ function KernelPage() {
       </section>
       <section className="kernel-principles experience-section">
         <div>
-          <span>01 / OWN THE SPACE</span>
+          <span>01 / RUNS LOCALLY</span>
           <h3>
             Your machine.
             <br />
-            Your business.
+            Your files.
           </h3>
           <p>
-            A local model connection and a designated workspace. A small world,
-            on purpose.
+            A local model connection and a designated workspace. Nothing leaves
+            the machine.
           </p>
         </div>
         <div>
-          <span>02 / KEEP THE RECEIPTS</span>
+          <span>02 / EVERYTHING IS LOGGED</span>
           <h3>
-            Nothing disappears
+            Nothing happens
             <br />
-            into a black box.
+            off the record.
           </h3>
           <p>
-            An event journal keeps the plan, the tool calls, and the decisions
-            in one inspectable trail.
+            An event journal records the plan, every tool call, and every
+            decision in one inspectable trail.
           </p>
         </div>
         <div>
-          <span>03 / KNOW WHEN TO STOP</span>
+          <span>03 / STOPS WHEN TOLD</span>
           <h3>
-            Power, with
-            <br />a pause button.
+            Writes need
+            <br />
+            approval.
           </h3>
           <p>
-            Explicit permissions and bounded runs. Knowing when to stop is part
-            of doing the job.
+            File writes require explicit permission, and runs are bounded by
+            design.
           </p>
         </div>
       </section>
@@ -839,9 +840,9 @@ function KernelPage() {
           ON THE HORIZON
         </span>
         <p>
-          Kernel is a proposed project.
+          Kernel is a proposed project, not built yet.
           <br />
-          This is a glimpse of what I want to build.
+          This page is a mockup of the intended design.
         </p>
       </footer>
     </>
@@ -931,10 +932,10 @@ export default function ProjectExperience({
               <ProjectBrand project={key} />
               <span className="experience-header-note">
                 {key === 'livedmatch'
-                  ? 'PEOPLE × PURPOSE'
+                  ? 'LIVE PLATFORM'
                   : key === 'aicorn'
-                    ? 'INTELLIGENCE × ACTION'
-                    : 'SYSTEMS × AGENCY'}
+                    ? 'OPEN SOURCE'
+                    : 'PROPOSED CONCEPT'}
               </span>
               <Dialog.Close className="experience-close" ref={closeRef}>
                 <span>Back to work</span>

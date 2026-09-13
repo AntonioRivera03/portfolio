@@ -25,15 +25,15 @@ const projects = {
     number: '01',
     type: 'Live platform',
     description:
-      'Bringing lived experience into research. Thoughtful matches, trusted communities, and partnerships that go somewhere.',
-    tags: ['Matching platform', 'Human-centered design'],
+      'A live platform that matches research studies with people who have relevant lived experience. Built with Next.js, Prisma, and NeonDB, with role-based access, transactional email, and a weighted matching algorithm.',
+    tags: ['Matching platform', 'Next.js / TypeScript'],
   },
   aicorn: {
     name: 'AICorn',
     number: '02',
     type: 'Open source integration',
     description:
-      'Your backlog. Your agents. One Conductor to keep it all moving, with you in control.',
+      'An open-source task manager extended with AI agents. A Conductor mode plans, builds, and reviews work in isolated Git worktrees, with Kubernetes preview environments per branch and an MCP companion for scoped tool access.',
     tags: ['AI orchestration', 'React / TypeScript', 'Go'],
   },
   kernel: {
@@ -41,7 +41,7 @@ const projects = {
     number: '03',
     type: 'Proposed concept',
     description:
-      'What if an agent had to show its work? A small, local runtime with a memory of every move.',
+      'A proposed local agent runtime in Rust: every tool call recorded in an event journal, and no file writes without explicit human approval. Not built yet — this is the design.',
     tags: ['Rust · proposed', 'Local-first', 'Agent runtime'],
   },
 };
