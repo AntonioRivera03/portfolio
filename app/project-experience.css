@@ -2706,3 +2706,35 @@
     transition: none;
   }
 }
+
+/* Magnolia case study — paper document with margin annotations. */
+.experience-magnolia .experience-brand{color:#e8dfc2}
+.mg-hero{display:grid;grid-template-columns:1fr 1.25fr;gap:44px;align-items:start}
+.mg-hero .experience-title em{color:#e8dfc2}
+.mg-hero-credit{display:block;margin-top:22px;font:10px 'IBM Plex Mono',monospace;letter-spacing:1.4px;color:#849872}
+.mg-demo-topline{margin-bottom:16px}
+.mg-demo-body{display:grid;grid-template-columns:1.1fr 1fr;gap:14px}
+.mg-page{background:#efe8d6;color:#3d3a2c;border-radius:10px;padding:26px 24px;box-shadow:0 24px 50px #0007}
+.mg-page-title{height:12px;width:40%;border-radius:4px;background:#c9bfa4;margin-bottom:16px}
+.mg-page p{font-size:13.5px;line-height:1.85;margin:0 0 14px;color:#4a463a}
+.mg-annotation{border:none;background:#f2d67c;color:#4a3f1a;border-radius:3px;padding:1px 5px;font:inherit;cursor:pointer;box-shadow:0 0 0 2px #f2d67c55;transition:box-shadow .25s}
+.mg-annotation.is-ask{background:#a9d3ae;color:#274a2e;box-shadow:0 0 0 2px #a9d3ae66}
+.mg-annotation.is-comment{background:transparent;color:#b25f14;box-shadow:none;text-decoration:underline dotted;text-underline-offset:3px}
+.mg-annotation:hover{box-shadow:0 0 0 4px #d4ff7255}
+.mg-annotation.is-active{outline:2px solid #d4ff72;outline-offset:2px}
+.mg-margin{background:#20261c;border:1px solid #3a4432;border-radius:10px;padding:22px;animation:enter .4s both}
+.mg-margin-kind{font:10px 'IBM Plex Mono',monospace;letter-spacing:1.4px;color:#d4ff72}
+.mg-margin blockquote{margin:14px 0;font-style:italic;font-size:14px;line-height:1.7;color:#c9c4ae;border-left:2px solid #5a6b35;padding-left:14px}
+.mg-margin h3{margin:0 0 8px;font-size:19px;letter-spacing:-.5px;color:#eef1e4}
+.mg-margin p{margin:0;font-size:13.5px;line-height:1.75;color:#a8b39a}
+.mg-how .mg-steps{list-style:none;margin:34px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.mg-steps li{border:1px solid #35432a;border-radius:10px;padding:20px;background:#161b11}
+.mg-steps strong{display:block;font:11px 'IBM Plex Mono',monospace;letter-spacing:1px;color:#d4ff72;margin-bottom:10px}
+.mg-steps p{margin:0;font-size:13.5px;line-height:1.7;color:#a8b39a}
+.mg-principles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.mg-principles>div{border:1px solid #35432a;border-radius:10px;padding:26px;background:#161b11}
+.mg-principles svg{color:#e8dfc2;margin-bottom:16px}
+.mg-principles h3{margin:0 0 10px;font-size:20px;letter-spacing:-.5px;color:#eef1e4}
+.mg-principles p{margin:0;font-size:14px;line-height:1.75;color:#a8b39a}
+@media(max-width:900px){.mg-hero{grid-template-columns:1fr}.mg-demo-body{grid-template-columns:1fr}.mg-how .mg-steps{grid-template-columns:1fr 1fr}.mg-principles{grid-template-columns:1fr}}
+@media(max-width:600px){.mg-how .mg-steps{grid-template-columns:1fr}}
