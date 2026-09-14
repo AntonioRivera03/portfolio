@@ -44,6 +44,17 @@ function useReveal() {
 
 const experience = [
   {
+    company: 'Charles Schwab',
+    location: '',
+    dates: 'May 2026 – Present',
+    role: 'Software Developer',
+    stack: '',
+    bullets: [
+      'Build agentic workflows to automate tasks, reducing manual effort across day-to-day work.',
+      'Develop applications that provide more efficient alternatives to existing tooling and processes.',
+    ],
+  },
+  {
     company: 'Paycom',
     location: 'Irving, Texas',
     dates: 'November 2024 – February 2026',
@@ -168,9 +179,12 @@ function ExperienceCard({ job }: { job: (typeof experience)[number] }) {
           <span className="eyebrow">{job.dates}</span>
           <h3>{job.company}</h3>
           <p>
-            {job.role} · {job.location}
+            {job.role}
+            {job.location ? ` · ${job.location}` : ''}
           </p>
-          <span className="resume-stack">{job.stack}</span>
+          {job.stack ? (
+            <span className="resume-stack">{job.stack}</span>
+          ) : null}
         </div>
         <span className={`resume-job-toggle ${open ? 'is-open' : ''}`}>
           <ChevronDown size={20} />
