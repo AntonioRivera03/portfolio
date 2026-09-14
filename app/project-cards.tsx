@@ -1,10 +1,12 @@
 import {
   Asterisk,
+  BookOpenText,
   Check,
   Cpu,
   GitBranch,
   Layers,
   Leaf,
+  MessageCircle,
   Sparkles,
   Terminal,
   Users,
@@ -149,6 +151,65 @@ export function KernelVisual() {
             <span className="terminal-cursor" />
           </p>
         </div>
+      </div>
+    </div>
+  );
+}
+export function MagnoliaVisual() {
+  return (
+    <div className="project-visual magnolia-visual" aria-hidden="true">
+      <div className="visual-topbar">
+        <span className="mini-brand">
+          <span className="magnolia-logo">
+            <BookOpenText size={16} />
+          </span>
+          magnolia
+        </span>
+        <span>LOCAL-FIRST · PDF READER</span>
+      </div>
+      <div className="magnolia-reader">
+        <div className="magnolia-page">
+          <div className="magnolia-page-title" />
+          <div className="magnolia-lines">
+            <i style={{ width: '94%' }} />
+            <i style={{ width: '88%' }} />
+            <i className="hl-yellow" style={{ width: '72%' }} />
+            <i style={{ width: '91%' }} />
+            <i className="hl-green" style={{ width: '64%' }} />
+            <i style={{ width: '85%' }} />
+            <i style={{ width: '78%' }} />
+            <i style={{ width: '90%' }} />
+          </div>
+          <span className="magnolia-comment-dot" />
+          <div className="magnolia-margin-tab">
+            <MessageCircle size={13} />
+            <span>ask ai</span>
+          </div>
+        </div>
+        <div className="magnolia-margin">
+          <div className="magnolia-chat-label">
+            <span className="magnolia-chat-dot" />
+            LINKED TO HIGHLIGHT
+          </div>
+          <div className="magnolia-bubble">
+            What does this passage claim about retrieval?
+          </div>
+          <div className="magnolia-bubble is-ai">
+            It ranks chunks by vector similarity in Qdrant, then grounds the
+            answer in the top passages.
+          </div>
+        </div>
+      </div>
+      <div className="magnolia-bottom">
+        <span>
+          <Check size={12} /> Local OCR
+        </span>
+        <span>
+          <Check size={12} /> Qdrant retrieval
+        </span>
+        <span>
+          <Check size={12} /> Ollama chat
+        </span>
       </div>
     </div>
   );

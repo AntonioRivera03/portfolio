@@ -14,7 +14,7 @@ import ProjectExperience, {
   type ProjectSelection,
   type ProjectKey,
 } from './project-experience';
-import { MatchVisual, AIcornVisual, KernelVisual } from './project-cards';
+import { MatchVisual, AIcornVisual, KernelVisual, MagnoliaVisual } from './project-cards';
 import Sculpture from './sculpture';
 import ActivityLandscape from './activity';
 import { publicAsset } from '@/lib/site-paths';
@@ -43,6 +43,14 @@ const projects = {
     description:
       'A proposed local agent runtime in Rust: every tool call recorded in an event journal, and no file writes without explicit human approval. Not built yet — this is the design.',
     tags: ['Rust · proposed', 'Local-first', 'Agent runtime'],
+  },
+  magnolia: {
+    name: 'Magnolia',
+    number: '04',
+    type: 'Local-first build',
+    description:
+      'A local-first PDF reader with AI in the margin. Highlight any passage to open a conversation anchored to that spot — local OCR, Qdrant retrieval, and Ollama chat, with no cloud required.',
+    tags: ['Local-first AI', 'TypeScript / Python', 'Qdrant'],
   },
 };
 
@@ -102,6 +110,9 @@ export default function Home() {
         <nav aria-label="Main navigation">
           <a href="#work">
             Work <span>01</span>
+          </a>
+          <a href="/resume">
+            Résumé <span>02</span>
           </a>
           <a href="#about">
             About <span>03</span>
@@ -228,6 +239,8 @@ export default function Home() {
                       <MatchVisual />
                     ) : key === 'aicorn' ? (
                       <AIcornVisual />
+                    ) : key === 'magnolia' ? (
+                      <MagnoliaVisual />
                     ) : (
                       <KernelVisual />
                     )}

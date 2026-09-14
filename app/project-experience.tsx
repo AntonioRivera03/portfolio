@@ -9,6 +9,7 @@ import {
   ArrowRight,
   ArrowUpRight,
   Asterisk,
+  BookOpenText,
   Check,
   CheckCheck,
   ChevronRight,
@@ -28,17 +29,17 @@ import {
   Users,
   X,
 } from 'lucide-react';
-import { MatchVisual, AIcornVisual, KernelVisual } from './project-cards';
+import { MatchVisual, AIcornVisual, KernelVisual, MagnoliaVisual } from './project-cards';
 import './project-experience.css';
 
-export type ProjectKey = 'livedmatch' | 'aicorn' | 'kernel';
+export type ProjectKey = 'livedmatch' | 'aicorn' | 'kernel' | 'magnolia';
 export type ProjectSelection = {
   key: ProjectKey;
   source: HTMLElement;
   trigger: HTMLButtonElement;
   bounds: DOMRect;
 };
-const names = { livedmatch: 'LivedMatch', aicorn: 'AICorn', kernel: 'Kernel' };
+const names = { livedmatch: 'LivedMatch', aicorn: 'AICorn', kernel: 'Kernel', magnolia: 'Magnolia' };
 
 function ProjectBrand({ project }: { project: ProjectKey }) {
   return (
@@ -49,6 +50,8 @@ function ProjectBrand({ project }: { project: ProjectKey }) {
         </span>
       ) : project === 'aicorn' ? (
         <Leaf size={25} />
+      ) : project === 'magnolia' ? (
+        <BookOpenText size={25} />
       ) : (
         <Cpu size={25} />
       )}
@@ -56,7 +59,9 @@ function ProjectBrand({ project }: { project: ProjectKey }) {
         ? 'livedmatch'
         : project === 'kernel'
           ? 'kernel'
-          : 'AICorn'}
+          : project === 'magnolia'
+            ? 'magnolia'
+            : 'AICorn'}
     </span>
   );
 }
@@ -65,7 +70,7 @@ function ProjectLink({
   project,
   children,
 }: {
-  project: 'livedmatch' | 'aicorn';
+  project: 'livedmatch' | 'aicorn' | 'magnolia';
   children: React.ReactNode;
 }) {
   return (
@@ -74,7 +79,9 @@ function ProjectLink({
       href={
         project === 'livedmatch'
           ? 'https://www.livedmatch.com'
-          : 'https://github.com/AntonioRivera03/AIcorn'
+          : project === 'magnolia'
+            ? 'https://github.com/AntonioRivera03/JournalAssistant'
+            : 'https://github.com/AntonioRivera03/AIcorn'
       }
       target="_blank"
       rel="noreferrer"
@@ -493,6 +500,162 @@ function AicornPage() {
           </a>
         </span>
         <ProjectLink project="aicorn">Explore the source</ProjectLink>
+      </footer>
+    </>
+  );
+}
+
+const magnoliaAnnotations = [
+  {
+    id: 'highlight',
+    kind: 'Highlight',
+    passage: '“…vector similarity in Qdrant, then grounds the answer in the top passages.”',
+    heading: 'Yellow highlight',
+    body: 'Saved to the margin with its page and position. Clicking it later — after scrolling, zooming, or restarting — jumps straight back to this passage.',
+  },
+  {
+    id: 'ask',
+    kind: 'Ask AI',
+    passage: '“…vector similarity in Qdrant, then grounds the answer in the top passages.”',
+    heading: 'Ask AI',
+    body: 'The green highlight opened its own conversation. The question, the answer, and the exact passage stay linked — one chat per highlight, always findable.',
+  },
+  {
+    id: 'comment',
+    kind: 'Comment',
+    passage: '“Overlapping annotations have a chooser so no chat becomes inaccessible.”',
+    heading: 'Comment',
+    body: 'A note pinned to the text with an orange dot at the passage’s end. Your thinking, kept where you thought it.',
+  },
+];
+
+function MagnoliaPage() {
+  const [active, setActive] = useState('ask');
+  const current = magnoliaAnnotations.find((a) => a.id === active)!;
+  return (
+    <>
+      <section className="mg-hero experience-section">
+        <div className="mg-hero-copy">
+          <span className="experience-kicker">
+            <span /> LOCAL-FIRST · PDF READER
+          </span>
+          <Dialog.Title className="experience-title">
+            Your documents,
+            <br />
+            <em>with AI in the margin.</em>
+          </Dialog.Title>
+          <Dialog.Description className="experience-intro">
+            Magnolia — built in the open as JournalAssistant — is a
+            document-first PDF reader. Highlight any passage to open a
+            conversation anchored to that spot. OCR, embeddings, retrieval, and
+            chat all run locally in Docker. No cloud required.
+          </Dialog.Description>
+          <ProjectLink project="magnolia">Explore the source</ProjectLink>
+          <span className="mg-hero-credit">
+            TYPESCRIPT · PYTHON · QDRANT · OLLAMA
+          </span>
+        </div>
+        <div className="mg-demo" aria-label="Try an annotation">
+          <div className="mg-demo-topline">
+            <span className="experience-kicker">TRY AN ANNOTATION ↓</span>
+          </div>
+          <div className="mg-demo-body">
+            <div className="mg-page">
+              <div className="mg-page-title" />
+              <p>
+                Import a PDF and read it in a continuously scrolling view.
+                Select any passage to open the toolbar —{' '}
+                <button
+                  className={`mg-annotation ${active === 'highlight' ? 'is-active' : ''}`}
+                  onClick={() => setActive('highlight')}
+                >
+                  highlight it in yellow
+                </button>
+                , underline it, or{' '}
+                <button
+                  className={`mg-annotation is-ask ${active === 'ask' ? 'is-active' : ''}`}
+                  onClick={() => setActive('ask')}
+                >
+                  ask AI about it in green
+                </button>
+                .
+              </p>
+              <p>
+                Every annotation stores page-relative geometry and the original
+                quote, so it survives scrolling and restarts.{' '}
+                <button
+                  className={`mg-annotation is-comment ${active === 'comment' ? 'is-active' : ''}`}
+                  onClick={() => setActive('comment')}
+                >
+                  Leave a comment
+                </button>{' '}
+                and an orange dot marks the spot.
+              </p>
+            </div>
+            <div className="mg-margin" aria-live="polite" key={active}>
+              <span className="mg-margin-kind">{current.kind}</span>
+              <blockquote>{current.passage}</blockquote>
+              <h3>{current.heading}</h3>
+              <p>{current.body}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="mg-how experience-section">
+        <span className="experience-kicker">HOW IT WORKS</span>
+        <ol className="mg-steps">
+          <li>
+            <strong>01 · Import</strong>
+            <p>Drop in a PDF. Pages render near the viewport to bound memory.</p>
+          </li>
+          <li>
+            <strong>02 · OCR</strong>
+            <p>RapidOCR extracts text locally — scanned pages become readable.</p>
+          </li>
+          <li>
+            <strong>03 · Index</strong>
+            <p>Passages are embedded and stored in Qdrant for vector retrieval.</p>
+          </li>
+          <li>
+            <strong>04 · Ask</strong>
+            <p>Ollama chats against the retrieved passages, anchored to your highlight.</p>
+          </li>
+        </ol>
+      </section>
+      <section className="mg-principles experience-section">
+        <div>
+          <LockKeyhole size={25} />
+          <h3>Local-first.</h3>
+          <p>
+            The whole stack — OCR, embeddings, Qdrant, and chat — runs in
+            Docker on your machine. The default model runs on CPU; no GPU, no
+            cloud.
+          </p>
+        </div>
+        <div>
+          <BookOpenText size={25} />
+          <h3>Anchored, not floating.</h3>
+          <p>
+            Highlights and chats are pinned to page-relative geometry and the
+            original quote. Your margin notes always know where they belong.
+          </p>
+        </div>
+        <div>
+          <Sparkles size={25} />
+          <h3>Your model.</h3>
+          <p>
+            Start with a small local model, or point a workspace at OpenAI or
+            OpenCode instead. The reader doesn’t care — the margin does.
+          </p>
+        </div>
+      </section>
+      <footer className="experience-footer">
+        <span>
+          Built as JournalAssistant, presented here as Magnolia.
+          <br />
+          Three panes: documents, pages, and the conversation in the margin.
+        </span>
+        <ProjectLink project="magnolia">Explore the source</ProjectLink>
       </footer>
     </>
   );
@@ -923,6 +1086,8 @@ export default function ProjectExperience({
               <MatchVisual />
             ) : key === 'aicorn' ? (
               <AIcornVisual />
+            ) : key === 'magnolia' ? (
+              <MagnoliaVisual />
             ) : (
               <KernelVisual />
             )}
@@ -935,7 +1100,9 @@ export default function ProjectExperience({
                   ? 'LIVE PLATFORM'
                   : key === 'aicorn'
                     ? 'OPEN SOURCE'
-                    : 'PROPOSED CONCEPT'}
+                    : key === 'magnolia'
+                      ? 'LOCAL-FIRST BUILD'
+                      : 'PROPOSED CONCEPT'}
               </span>
               <Dialog.Close className="experience-close" ref={closeRef}>
                 <span>Back to work</span>
@@ -948,6 +1115,8 @@ export default function ProjectExperience({
                 <LivedMatchPage />
               ) : key === 'aicorn' ? (
                 <AicornPage />
+              ) : key === 'magnolia' ? (
+                <MagnoliaPage />
               ) : (
                 <KernelPage />
               )}
